@@ -1,0 +1,15 @@
+.catalog:
+  name: openvpn
+  version: 0
+  description: test test test
+  minimum_rancher_version: 1.0.1
+  maximum_rancher_version: 2.0.0
+  upgrade_from: 
+  questions:
+    - variable: test
+      label: adwawdawd
+      description: |
+        adwawdawdaw
+      default: abcd
+      required: true
+      type: string

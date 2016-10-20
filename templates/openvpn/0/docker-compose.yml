@@ -1,0 +1,4 @@
+ version: '1'
+ services:
+   openvpn:
+     image: linuxserver/openvpn-as
