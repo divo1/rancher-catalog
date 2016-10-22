@@ -1,9 +1,9 @@
 ---
 .catalog:
   name: openvpn-divo
-  version: 1.0.5
+  version: 1.0.6
   description: "Openvpn for Rancher - tap, port 1194"
-  maintainer: "Mateusz Górny <divo@divo.net.pl>"
+  maintainer: "Mateusz Gorny <divo@divo.net.pl>"
   minimum_rancher_version: 1.0.1
   maximum_rancher_version: 2.0.0
   uuid: openvpn-divo-0
