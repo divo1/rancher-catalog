@@ -1,33 +1,35 @@
 .catalog:
   name: openvpn-divo
   version: 1.0.1
-  description: Openvpn for Rancher - tap, port 1194
+  description: "Openvpn for Rancher - tap, port 1194"
   maintainer: "Mateusz Górny <divo@divo.net.pl>"
   minimum_rancher_version: 1.0.1
   maximum_rancher_version: 2.0.0
   uuid: openvpn-divo-0
   questions:
+
+
     - variable: "REMOTE_IP"
       description: "Ip address or hostname that will be set in client configuration, you can leave default values and replace them in client config later"
       label: "OpenVPN server endpoint address:"
       required: true
       default: "IP-address-or-hostname"
       type: "string"
-      
+
     - variable: "REMOTE_PORT"
       description: "TCP port that will be set in client configuration, you can leave default values and replace them in client config later"
       label: "OpenVPN server endpoint port :"
       required: true
       default: "1194"
       type: "string"
-      
+ 
     - variable: "VPNPOOL_NETWORK"
       description: "VPN subnet for OpenVPN to draw client addresses from"
       label: "Network pool:"
       required: true
       default: "10.43.0.0"
       type: "string"
-      
+ 
     - variable: "VPNPOOL_CIDR"
       description: "CIDR netmask for VPN subnet"
       label: "CIDR netmask:"
@@ -50,7 +52,6 @@
         - 28
         - 29
         - 30
-        
 
     - variable: "CERT_COUNTRY"
       description: "Country code part of VPN CA (2 digits only)"
@@ -58,7 +59,7 @@
       required: true
       default: "US"
       type: "string"
-      
+
     - variable: "CERT_PROVINCE"
       description: "Province part of VPN CA"
       label: "Certificate Province:"
@@ -66,7 +67,6 @@
       default: "AL"
       type: "string"
 
-    
     - variable: "CERT_CITY"
       description: "City part of VPN CA "
       label: "Certificate City:"
@@ -80,21 +80,21 @@
       required: true
       default: "ACME"
       type: "string"
-      
+
     - variable: "CERT_OU"
       description: "Organizational Unit part of VPN CA "
       label: "Certificate OU:"
       required: true
       default: "IT"
       type: "string"
-      
+
     - variable: "CERT_EMAIL"
       description: "Email part of VPN CA "
       label: "Certificate Email:"
       required: true
       default: "foo@example.com"
       type: "string"
-      
+
     - variable: "OPENVPN_EXTRACONF"
       description: "Optionnal custom OpenVPN config line, for example to push your own custom route"
       label: "OpenVPN custom config:"
