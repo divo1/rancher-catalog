@@ -27,9 +27,7 @@ openvpn-httpdigest-server:
   labels:
     io.rancher.sidekicks: openvpn-httpdigest-data
     io.rancher.container.pull_image: always
-  build:
-    context: ./
-    dockerfile: Dockerfile
+  build: .
   image: openvpn:1.0.0
   privileged: true
   volumes_from:
