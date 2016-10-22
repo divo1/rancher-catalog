@@ -1,6 +1,5 @@
 name: openvpn
-description: |
-  Stworzenie openvpn
+description: "Stworzenie openvpn"
 version: 1.0.1
 category: vpn
 maintainer: divo
