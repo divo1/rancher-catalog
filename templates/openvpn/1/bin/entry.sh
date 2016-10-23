@@ -102,6 +102,7 @@ if [ ! -d $OPENVPNDIR/easy-rsa ]; then
    sed -i "s/export KEY_ORG=.*/export KEY_ORG=\"$CERT_ORG\"/g" $OPENVPNDIR/easy-rsa/vars
    sed -i "s/export KEY_EMAIL=.*/export KEY_EMAIL=\"$CERT_EMAIL\"/g" $OPENVPNDIR/easy-rsa/vars
    sed -i "s/export KEY_OU=.*/export KEY_OU=\"$CERT_OU\"/g" $OPENVPNDIR/easy-rsa/vars
+   sed -i "s/export KEY_SIZE=.*/export KEY_SIZE=2048/g" $OPENVPNDIR/easy-rsa/vars
 
    pushd $OPENVPNDIR/easy-rsa
    cd $OPENVPNDIR/easy-rsa
