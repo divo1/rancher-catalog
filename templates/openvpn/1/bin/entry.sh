@@ -117,9 +117,9 @@ if [ ! -d $OPENVPNDIR/easy-rsa ]; then
 fi
 
 #=====[ Enable tcp forwarding and add iptables MASQUERADE rule ]================
-sudo echo 1 > /proc/sys/net/ipv4/ip_forward
-sudo iptables -t nat -F
-sudo iptables -t nat -A POSTROUTING -s $VPNPOOL_NETWORK/$VPNPOOL_NETMASK -j MASQUERADE
+#echo 1 > /proc/sys/net/ipv4/ip_forward
+iptables -t nat -F
+iptables -t nat -A POSTROUTING -s $VPNPOOL_NETWORK/$VPNPOOL_NETMASK -j MASQUERADE
 
 
 /usr/local/bin/openvpn-get-client-config.sh > $OPENVPNDIR/client.conf
