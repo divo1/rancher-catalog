@@ -87,6 +87,11 @@ EOF
 
 echo $OPENVPN_EXTRACONF |sed 's/\\n/\n/g' >> $OPENVPNDIR/server.conf
 
+mkdir -p /dev/net
+if [ ! -c /dev/net/tun ]; then
+    mknod /dev/net/tun c 10 200
+fi
+
 #=====[ Generating certificates ]===============================================
 if [ ! -d $OPENVPNDIR/easy-rsa ]; then
    # Copy easy-rsa tools to /etc/openvpn
