@@ -59,7 +59,7 @@ cat > $OPENVPNDIR/server.conf <<- EOF
 server $ROUTE_NETWORK $ROUTE_NETMASK
 port $REMOTE_PORT
 proto udp
-dev tap
+dev tun
 dh easy-rsa/keys/dh2048.pem
 push "dhcp-option DNS $PUSHDNS"
 push "dhcp-option SEARCH $PUSHSEARCH"
