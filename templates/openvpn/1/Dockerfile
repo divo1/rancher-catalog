@@ -30,4 +30,4 @@ EXPOSE 1194/udp
 CMD ["/usr/local/bin/entry.sh"]
 
 ADD ./bin /usr/local/bin
-RUN chmod a+x /usr/local/bin/*
+#RUN chmod a+x /usr/local/bin/*
