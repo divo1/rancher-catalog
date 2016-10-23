@@ -27,7 +27,7 @@ openvpn-httpdigest-server:
   labels:
     io.rancher.sidekicks: openvpn-httpdigest-data
     io.rancher.container.pull_image: always
-  build: https://raw.githubusercontent.com/divo1/rancher-catalog/master/templates/openvpn/1/Dockerfile
+  image: quay.io/divo/openvpn
   privileged: true
   volumes_from:
   - openvpn-httpdigest-data
