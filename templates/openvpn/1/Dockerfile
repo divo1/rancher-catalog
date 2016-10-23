@@ -16,7 +16,8 @@ RUN echo deb http://archive.ubuntu.com/ubuntu/ precise main universe > /etc/apt/
 RUN apt-get update -q
 RUN apt-get install -qy openvpn iptables curl
 
-RUN ln -s /usr/share/doc/openvpn/examples/easy-rsa/2.0/ /etc/openvpn/easy-rsa/
+RUN mkdir -p /etc/openvpn/easy-rsa/
+RUN cp -R /usr/share/doc/openvpn/examples/easy-rsa/2.0/* /etc/openvpn/easy-rsa/
 
 # Needed by scripts
 ENV OPENVPN /etc/openvpn
