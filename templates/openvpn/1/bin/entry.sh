@@ -91,7 +91,9 @@ echo $OPENVPN_EXTRACONF |sed 's/\\n/\n/g' >> $OPENVPNDIR/server.conf
 if [ ! -d $OPENVPNDIR/easy-rsa ]; then
    # Copy easy-rsa tools to /etc/openvpn
    #rsync -avz /usr/share/easy-rsa $OPENVPNDIR/
-   cp -R /usr/share/easy-rsa $OPENVPNDIR/
+#   cp -R /usr/share/easy-rsa $OPENVPNDIR/
+   mkdir -p /etc/openvpn/easy-rsa/
+   cp -R /usr/share/doc/openvpn/examples/easy-rsa/2.0/* /etc/openvpn/easy-rsa/
 
     # Configure easy-rsa vars file
    sed -i "s/export KEY_COUNTRY=.*/export KEY_COUNTRY=\"$CERT_COUNTRY\"/g" $OPENVPNDIR/easy-rsa/vars
@@ -102,6 +104,7 @@ if [ ! -d $OPENVPNDIR/easy-rsa ]; then
    sed -i "s/export KEY_OU=.*/export KEY_OU=\"$CERT_OU\"/g" $OPENVPNDIR/easy-rsa/vars
 
    pushd $OPENVPNDIR/easy-rsa
+   cd $OPENVPNDIR/easy-rsa
    . ./vars
    ./clean-all || error "Cannot clean previous keys"
    checkpoint
