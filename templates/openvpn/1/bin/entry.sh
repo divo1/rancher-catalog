@@ -20,6 +20,7 @@ OPENVPNDIR="/etc/openvpn"
 [ "$REMOTE_PORT" = "" ]     && export REMOTE_PORT="1194"
 [ "$PUSHDNS" = "" ]         && export PUSHDNS="169.254.169.250"
 [ "$PUSHSEARCH" = "" ]      && export PUSHSEARCH="rancher.internal"
+[ "$DHPARAM_KEY" = "" ]     && export DHPARAM_KEY="1024"
 
 [ "$ROUTE_NETWORK" = "" ]   && export ROUTE_NETWORK="10.42.0.0"
 [ "$ROUTE_NETMASK" = "" ]   && export ROUTE_NETMASK="255.255.0.0"
@@ -60,7 +61,7 @@ server $ROUTE_NETWORK $ROUTE_NETMASK
 port $REMOTE_PORT
 proto udp
 dev tun
-dh easy-rsa/keys/dh2048.pem
+dh easy-rsa/keys/dh$DHPARAM_KEY.pem
 push "dhcp-option DNS $PUSHDNS"
 push "dhcp-option SEARCH $PUSHSEARCH"
 push "route $ROUTE_NETWORK $ROUTE_NETMASK"
@@ -107,7 +108,7 @@ if [ ! -d $OPENVPNDIR/easy-rsa ]; then
    sed -i "s/export KEY_ORG=.*/export KEY_ORG=\"$CERT_ORG\"/g" $OPENVPNDIR/easy-rsa/vars
    sed -i "s/export KEY_EMAIL=.*/export KEY_EMAIL=\"$CERT_EMAIL\"/g" $OPENVPNDIR/easy-rsa/vars
    sed -i "s/export KEY_OU=.*/export KEY_OU=\"$CERT_OU\"/g" $OPENVPNDIR/easy-rsa/vars
-   sed -i "s/export KEY_SIZE=.*/export KEY_SIZE=2048/g" $OPENVPNDIR/easy-rsa/vars
+   sed -i "s/export KEY_SIZE=.*/export KEY_SIZE=\"$DHPARAM_KEY\"/g" $OPENVPNDIR/easy-rsa/vars
 
    pushd $OPENVPNDIR/easy-rsa
    cd $OPENVPNDIR/easy-rsa
