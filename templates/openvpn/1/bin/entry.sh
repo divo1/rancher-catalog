@@ -56,7 +56,7 @@ VPNPOOL_NETMASK=$(cdr2mask $VPNPOOL_CIDR)
 
 cat > $OPENVPNDIR/server.conf <<- EOF
 
-server $REMOTE_IP
+server $ROUTE_NETWORK $ROUTE_NETMASK
 port $REMOTE_PORT
 proto udp
 dev tap
