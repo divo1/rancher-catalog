@@ -57,10 +57,10 @@ VPNPOOL_NETMASK=$(cdr2mask $VPNPOOL_CIDR)
 
 cat > $OPENVPNDIR/server.conf <<- EOF
 
-server $ROUTE_NETWORK $ROUTE_NETMASK
+server $VPNPOOL_NETWORK $VPNPOOL_CIDR
 port $REMOTE_PORT
 proto udp
-dev tun
+dev tap
 dh easy-rsa/keys/dh$DHPARAM_KEY.pem
 push "dhcp-option DNS $PUSHDNS"
 push "dhcp-option SEARCH $PUSHSEARCH"
@@ -89,8 +89,8 @@ EOF
 echo $OPENVPN_EXTRACONF |sed 's/\\n/\n/g' >> $OPENVPNDIR/server.conf
 
 mkdir -p /dev/net
-if [ ! -c /dev/net/tun ]; then
-    mknod /dev/net/tun c 10 200
+if [ ! -c /dev/net/tap ]; then
+    mknod /dev/net/tap c 10 200
 fi
 
 #=====[ Generating certificates ]===============================================
