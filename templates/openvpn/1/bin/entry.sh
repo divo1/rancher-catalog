@@ -78,7 +78,7 @@ comp-lzo
 persist-key
 persist-tun
 username-as-common-name
-client-cert-not-required
+#client-cert-not-required
 
 script-security 3 system
 #auth-user-pass-verify /usr/local/bin/openvpn-auth.sh via-env
