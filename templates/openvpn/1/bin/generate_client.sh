@@ -12,34 +12,47 @@ function generate {
 	port=1194
 	server="openvpn.divo.net.pl"
 
-	cd {{ openvpn_dir }}/easy-rsa
+	path="$name.ovpn"
+
+	cd $openvpn_dir/easy-rsa
 	source vars
-	export EASY_RSA="{{ openvpn_dir }}/easy-rsa"
-	export KEY_DIR="{{ openvpn_dir }}/easy-rsa/certs"
+	export EASY_RSA="$openvpn_dir/easy-rsa"
+	export KEY_DIR="$openvpn_dir/easy-rsa/keys"
 
 	./build-key $name
 
-	path="{{ openvpn_dir }}/certs/$name.ovpn"
-	cp {{ openvpn_dir }}/default.ovpn $path
+        serverconf=$(grep -nirl "port $port" {{ openvpn_dir }})
+        proto=$(grep "proto " $serverconf | cut -d" " -f2)
+        dev=$(grep "dev " $serverconf | cut -d" " -f2)
+        dhPath=$(grep "dh " $serverconf | cut -d" " -f2)
+        cipher=$(grep "cipher " $serverconf | cut -d" " -f2)
+        tlsAuthPath=$(grep "tls-auth " $serverconf | cut -d" " -f2)
 
-	serverconf=$(grep -nirl "port $port" {{ openvpn_dir }})
-	proto=$(grep "proto " $serverconf | cut -d" " -f2)
-	dev=$(grep "dev " $serverconf | cut -d" " -f2)
-	dhPath=$(grep "dh " $serverconf | cut -d" " -f2)
-	cipher=$(grep "cipher " $serverconf | cut -d" " -f2)
-	tlsAuthPath=$(grep "tls-auth " $serverconf | cut -d" " -f2)
+cat > $path <<- EOF
+client
+dev $dev
+proto $proto
+remote $server $port
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+ns-cert-type server
+comp-lzo
+verb 3
+user nobody
+group nogroup
+cipher $cipher
 
-	sed -i "s/__dev__/$dev/g" $path
-	sed -i "s/__proto__/$proto/g" $path
-	sed -i "s/__server__/$server/g" $path
-	sed -i "s/__port__/$port/g" $path
-	sed -i "s/__cipher__/$cipher/g" $path
-	
+key-direction 1
+EOF
+
+
 	echo "" >> $path
 	echo "" >> $path
 	echo "<ca>" >> $path
 	#cat $EASY_RSA/certs/ca.crt >> $path
-	cat {{ openvpn_dir }}/certs/ca.crt >> $path
+	cat $KEY_DIR/ca.crt >> $path
 	echo "</ca>" >> $path
 	echo "<cert>" >> $path
 	cat $KEY_DIR/$name.crt >> $path
