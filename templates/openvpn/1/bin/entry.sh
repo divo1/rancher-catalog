@@ -90,7 +90,8 @@ echo $OPENVPN_EXTRACONF |sed 's/\\n/\n/g' >> $OPENVPNDIR/server.conf
 #=====[ Generating certificates ]===============================================
 if [ ! -d $OPENVPNDIR/easy-rsa ]; then
    # Copy easy-rsa tools to /etc/openvpn
-   rsync -avz /usr/share/easy-rsa $OPENVPNDIR/
+   #rsync -avz /usr/share/easy-rsa $OPENVPNDIR/
+   cp -r /usr/share/easy-rsa $OPENVPNDIR/
 
     # Configure easy-rsa vars file
    sed -i "s/export KEY_COUNTRY=.*/export KEY_COUNTRY=\"$CERT_COUNTRY\"/g" $OPENVPNDIR/easy-rsa/vars
