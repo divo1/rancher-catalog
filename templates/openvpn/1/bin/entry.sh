@@ -77,7 +77,7 @@ keepalive 10 120
 comp-lzo
 persist-key
 persist-tun
-username-as-common-name
+#username-as-common-name
 #client-cert-not-required
 
 script-security 3 system
