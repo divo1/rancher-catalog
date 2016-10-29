@@ -59,7 +59,7 @@ cat > $OPENVPNDIR/server.conf <<- EOF
 
 server $VPNPOOL_NETWORK $VPNPOOL_NETMASK
 port $REMOTE_PORT
-proto udp
+proto tcp
 dev tap
 dh easy-rsa/keys/dh$DHPARAM_KEY.pem
 push "dhcp-option DNS $PUSHDNS"
