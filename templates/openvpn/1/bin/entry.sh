@@ -93,6 +93,12 @@ if [ ! -c /dev/net/tap ]; then
     mknod /dev/net/tap c 10 200
 fi
 
+mkdir -p /dev/net
+if [ ! -c /dev/net/tun ]; then
+    mknod /dev/net/tun c 10 200
+fi
+
+
 #=====[ Generating certificates ]===============================================
 if [ ! -d $OPENVPNDIR/easy-rsa ]; then
    # Copy easy-rsa tools to /etc/openvpn
@@ -128,8 +134,8 @@ fi
 
 #=====[ Enable tcp forwarding and add iptables MASQUERADE rule ]================
 #echo 1 > /proc/sys/net/ipv4/ip_forward
-iptables -t nat -F
-iptables -t nat -A POSTROUTING -s $VPNPOOL_NETWORK/$VPNPOOL_NETMASK -j MASQUERADE
+sudo iptables -t nat -F
+sudo iptables -t nat -A POSTROUTING -s $VPNPOOL_NETWORK/$VPNPOOL_NETMASK -j MASQUERADE
 
 
 /usr/local/bin/openvpn-get-client-config.sh > $OPENVPNDIR/client.conf
