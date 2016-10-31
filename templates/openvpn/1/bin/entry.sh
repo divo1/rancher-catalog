@@ -94,10 +94,10 @@ if [ ! -c /dev/net/tap ]; then
     mknod /dev/net/tap c 10 200
 fi
 
-#mkdir -p /dev/net
-#if [ ! -c /dev/net/tun ]; then
-#    mknod /dev/net/tun c 10 200
-#fi
+mkdir -p /dev/net
+if [ ! -c /dev/net/tun ]; then
+    mknod /dev/net/tun c 10 200
+fi
 
 echo "=====[ Generating certificates ]==============================================="
 if [ ! -d $OPENVPNDIR/easy-rsa ]; then
