@@ -24,12 +24,12 @@
       default: "1194"
       type: "string"
 
-    - variable: "DHPARAM_KEY"
-      description: "Set dhparam key size"
-      label: "Set dhparam key size: "
-      required: true
-      default: "1028"
-      type: "string"
+#    - variable: "DHPARAM_KEY"
+#      description: "Set dhparam key size"
+#      label: "Set dhparam key size: "
+#      required: true
+#      default: "1028"
+#      type: "string"
  
     - variable: "VPNPOOL_NETWORK"
       description: "VPN subnet for OpenVPN to draw client addresses from"
@@ -60,6 +60,13 @@
         - 28
         - 29
         - 30
+
+    - variable: "CERT_COMMON_NAME"
+      description: "Common name"
+      label: "Server common name :"
+      required: true
+      default: "openvpn.server"
+      type: "string"
 
     - variable: "CERT_COUNTRY"
       description: "Country code part of VPN CA (2 digits only)"

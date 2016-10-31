@@ -5,25 +5,26 @@ function error { echo "Error : $@"; CONTINUE=0; }
 function die { echo "$@" ; exit 1; }
 function checkpoint { [ "$CONTINUE" = "0" ] && echo "Unrecoverable errors found, exiting ..." && exit 1; }
 
-OPENVPNDIR="/etc/openvpn"
+OPENVPNDIR="$OPENVPN"
 
 # Providing defaults values for missing env variables
-[ "$CERT_COUNTRY" = "" ]    && export CERT_COUNTRY="US"
-[ "$CERT_PROVINCE" = "" ]   && export CERT_PROVINCE="AL"
-[ "$CERT_CITY" = "" ]       && export CERT_CITY="Birmingham"
-[ "$CERT_ORG" = "" ]        && export CERT_ORG="ACME"
-[ "$CERT_EMAIL" = "" ]      && export CERT_EMAIL="nobody@example.com"
-[ "$CERT_OU" = "" ]         && export CERT_OU="IT"
-[ "$VPNPOOL_NETWORK" = "" ] && export VPNPOOL_NETWORK="10.43.0.0"
-[ "$VPNPOOL_CIDR" = "" ]    && export VPNPOOL_CIDR="16"
-[ "$REMOTE_IP" = "" ]       && export REMOTE_IP="openvpn.divo.net.pl"
-[ "$REMOTE_PORT" = "" ]     && export REMOTE_PORT="1194"
-[ "$PUSHDNS" = "" ]         && export PUSHDNS="169.254.169.250"
-[ "$PUSHSEARCH" = "" ]      && export PUSHSEARCH="rancher.internal"
-[ "$DHPARAM_KEY" = "" ]     && export DHPARAM_KEY="1024"
+[ "$CERT_COMMON_NAME" = "" ] && export CERT_COMMON_NAME="openvpn.server"
+[ "$CERT_COUNTRY" = "" ]     && export CERT_COUNTRY="US"
+[ "$CERT_PROVINCE" = "" ]    && export CERT_PROVINCE="AL"
+[ "$CERT_CITY" = "" ]        && export CERT_CITY="Birmingham"
+[ "$CERT_ORG" = "" ]         && export CERT_ORG="ACME"
+[ "$CERT_EMAIL" = "" ]       && export CERT_EMAIL="nobody@example.com"
+[ "$CERT_OU" = "" ]          && export CERT_OU="IT"
+[ "$VPNPOOL_NETWORK" = "" ]  && export VPNPOOL_NETWORK="10.43.0.0"
+[ "$VPNPOOL_CIDR" = "" ]     && export VPNPOOL_CIDR="16"
+[ "$REMOTE_IP" = "" ]        && export REMOTE_IP="openvpn.divo.net.pl"
+[ "$REMOTE_PORT" = "" ]      && export REMOTE_PORT="1194"
+[ "$PUSHDNS" = "" ]          && export PUSHDNS="169.254.169.250"
+[ "$PUSHSEARCH" = "" ]       && export PUSHSEARCH="rancher.internal"
+[ "$DHPARAM_KEY" = "" ]      && export DHPARAM_KEY="2048"
 
-[ "$ROUTE_NETWORK" = "" ]   && export ROUTE_NETWORK="10.42.0.0"
-[ "$ROUTE_NETMASK" = "" ]   && export ROUTE_NETMASK="255.255.0.0"
+[ "$ROUTE_NETWORK" = "" ]    && export ROUTE_NETWORK="10.42.0.0"
+[ "$ROUTE_NETMASK" = "" ]    && export ROUTE_NETMASK="255.255.0.0"
 
 export RANCHER_METADATA_API='push "route 169.254.169.250 255.255.255.255"'
 [ "$NO_RANCHER_METADATA_API" != "" ] && export RANCHER_METADATA_API=""
@@ -52,25 +53,25 @@ cdr2mask ()
    echo ${1-0}.${2-0}.${3-0}.${4-0}
 }
 
-#=====[ Generating server config ]==============================================
+echo "=====[ Generating server config ]=============================================="
 VPNPOOL_NETMASK=$(cdr2mask $VPNPOOL_CIDR)
 
 cat > $OPENVPNDIR/server.conf <<- EOF
 
 server $VPNPOOL_NETWORK $VPNPOOL_NETMASK
 port $REMOTE_PORT
-proto tcp
+proto udp
 dev tap
-dh easy-rsa/keys/dh$DHPARAM_KEY.pem
+dh $EASYRSA_PKI/dh.pem
 push "dhcp-option DNS $PUSHDNS"
 push "dhcp-option SEARCH $PUSHSEARCH"
 push "route $ROUTE_NETWORK $ROUTE_NETMASK"
 client-to-client
 link-mtu 1500
-ca easy-rsa/keys/ca.crt
-cert easy-rsa/keys/server.crt
-key easy-rsa/keys/server.key
-tls-auth easy-rsa/keys/ta.key 0
+ca $EASYRSA_PKI/ca.crt
+cert $EASYRSA_PKI/issued/$CERT_COMMON_NAME.crt
+key $EASYRSA_PKI/private/$CERT_COMMON_NAME.key
+tls-auth $EASYRSA_PKI/ta.key 0
 cipher AES-256-CBC
 auth SHA1
 $RANCHER_METADATA_API
@@ -86,72 +87,74 @@ script-security 3 system
 
 EOF
 
-echo $OPENVPN_EXTRACONF |sed 's/\\n/\n/g' >> $OPENVPNDIR/server.conf
+echo $OPENVPN_EXTRACONF | sed 's/\\n/\n/g' >> $OPENVPNDIR/server.conf
 
 mkdir -p /dev/net
 if [ ! -c /dev/net/tap ]; then
     mknod /dev/net/tap c 10 200
 fi
 
-mkdir -p /dev/net
-if [ ! -c /dev/net/tun ]; then
-    mknod /dev/net/tun c 10 200
-fi
+#mkdir -p /dev/net
+#if [ ! -c /dev/net/tun ]; then
+#    mknod /dev/net/tun c 10 200
+#fi
 
-
-#=====[ Generating certificates ]===============================================
+echo "=====[ Generating certificates ]==============================================="
 if [ ! -d $OPENVPNDIR/easy-rsa ]; then
    # Copy easy-rsa tools to /etc/openvpn
-   #rsync -avz /usr/share/easy-rsa $OPENVPNDIR/
-#   cp -R /usr/share/easy-rsa $OPENVPNDIR/
-   mkdir -p /etc/openvpn/easy-rsa/
-   cp -R /usr/share/doc/openvpn/examples/easy-rsa/2.0/* /etc/openvpn/easy-rsa/
-
-    # Configure easy-rsa vars file
-   sed -i "s/export KEY_COUNTRY=.*/export KEY_COUNTRY=\"$CERT_COUNTRY\"/g" $OPENVPNDIR/easy-rsa/vars
-   sed -i "s/export KEY_PROVINCE=.*/export KEY_PROVINCE=\"$CERT_PROVINCE\"/g" $OPENVPNDIR/easy-rsa/vars
-   sed -i "s/export KEY_CITY=.*/export KEY_CITY=\"$CERT_CITY\"/g" $OPENVPNDIR/easy-rsa/vars
-   sed -i "s/export KEY_ORG=.*/export KEY_ORG=\"$CERT_ORG\"/g" $OPENVPNDIR/easy-rsa/vars
-   sed -i "s/export KEY_EMAIL=.*/export KEY_EMAIL=\"$CERT_EMAIL\"/g" $OPENVPNDIR/easy-rsa/vars
-   sed -i "s/export KEY_OU=.*/export KEY_OU=\"$CERT_OU\"/g" $OPENVPNDIR/easy-rsa/vars
-   sed -i "s/export KEY_SIZE=.*/export KEY_SIZE=\"$DHPARAM_KEY\"/g" $OPENVPNDIR/easy-rsa/vars
+   rsync -avz /usr/share/easy-rsa $OPENVPNDIR/
+   cp -R /usr/share/easy-rsa $OPENVPNDIR/
 
    pushd $OPENVPNDIR/easy-rsa
    cd $OPENVPNDIR/easy-rsa
-   . ./vars
-   ./clean-all || error "Cannot clean previous keys"
    checkpoint
-   ./build-ca --batch || error "Cannot build certificate authority"
+   easyrsa init-pki || error "Cannot init pki"
    checkpoint
-   ./build-key-server --batch server || error "Cannot create server key"
+   echo -en "$CERT_COUNTRY\n" | easyrsa build-ca nopass || error "Cannot build certificate authority"
    checkpoint
-   ./build-dh || error "Cannot create dh file"
+   easyrsa build-server-full "$CERT_COMMON_NAME" nopass || error "Cannot create server key"
    checkpoint
-   ./build-key --batch RancherVPNClient
-   openvpn --genkey --secret keys/ta.key
+   easyrsa gen-dh || error "Cannot create dh file"
+   checkpoint
+   openvpn --genkey --secret $EASYRSA_PKI/ta.key
    popd
 fi
 
-#=====[ Enable tcp forwarding and add iptables MASQUERADE rule ]================
-#echo 1 > /proc/sys/net/ipv4/ip_forward
-#iptables -t nat -F
-#iptables -t nat -A POSTROUTING -s $VPNPOOL_NETWORK/$VPNPOOL_NETMASK -j MASQUERADE
+echo "=====[ Enable tcp forwarding and add iptables MASQUERADE rule ]================"
+[ -z "$OVPN_NATDEVICE" ] && OVPN_NATDEVICE=eth0
+# Setup NAT forwarding if requested
+if [ "$OVPN_DEFROUTE" != "0" ] || [ "$OVPN_NAT" == "1" ] ; then
+    iptables -t nat -C POSTROUTING -s $OVPN_SERVER -o $OVPN_NATDEVICE -j MASQUERADE || {
+      iptables -t nat -A POSTROUTING -s $OVPN_SERVER -o $OVPN_NATDEVICE -j MASQUERADE
+    }
+    for i in "${OVPN_ROUTES[@]}"; do
+        iptables -t nat -C POSTROUTING -s "$i" -o $OVPN_NATDEVICE -j MASQUERADE || {
+          iptables -t nat -A POSTROUTING -s "$i" -o $OVPN_NATDEVICE -j MASQUERADE
+        }
+    done
+fi
+ip -6 route show default 2>/dev/null
+if [ $? = 0 ]; then
+    echo "Enabling IPv6 Forwarding"
+    # If this fails, ensure the docker container is run with --privileged
+    # Could be side stepped with `ip netns` madness to drop privileged flag
+
+    sysctl -w net.ipv6.conf.default.forwarding=1 || echo "Failed to enable IPv6 Forwarding default"
+    sysctl -w net.ipv6.conf.all.forwarding=1 || echo "Failed to enable IPv6 Forwarding"
+fi
 
 
-/usr/local/bin/openvpn-get-client-config.sh > $OPENVPNDIR/client.conf
+#/usr/local/bin/openvpn-get-client-config.sh > $OPENVPNDIR/client.conf
 
-echo "=====[ OpenVPN Server config ]============================================"
+echo "=====[ OpenVPN Server config ]================================================="
 cat $OPENVPNDIR/server.conf
-echo "=========================================================================="
+echo "==============================================================================="
 
-
-#=====[ Display client config  ]================================================
-echo ""
-echo "=====[ OpenVPN Client config ]============================================"
+echo "=====[ OpenVPN Client config ]================================================="
 echo " To regenerate client config, run the 'openvpn-get-client-config.sh' script "
-echo "--------------------------------------------------------------------------"
-cat $OPENVPNDIR/client.conf
+#echo "--------------------------------------------------------------------------"
+#cat $OPENVPNDIR/client.conf
 echo ""
-echo "=========================================================================="
-#=====[ Starting OpenVPN server ]===============================================
-/usr/sbin/openvpn --cd /etc/openvpn --config server.conf
+echo "==============================================================================="
+echo "=====[ Starting OpenVPN server ]==============================================="
+/usr/sbin/openvpn --cd $OPENVPN --config server.conf
