@@ -1,0 +1,8 @@
+---
+name: nfs
+description: "Przygotowanie server nfs"
+version: 0.0.1
+category: nfs
+maintainer: divo
+license: license
+projectURL: https://openvpn.net/
