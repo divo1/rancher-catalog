@@ -40,17 +40,17 @@ env | grep "REMOTE_"
 
 env | grep "REMOTE_" | while read i
 do
-    var=$(echo "$i" | awk -F= '{print $1}')
-    var_data=$( echo "${!var}" | sed "s/'/\\'/g" )
-    echo "export $var='$var_data'" >> $OPENVPNDIR/remote.env
+	var=$(echo "$i" | awk -F= '{print $1}')
+	var_data=$( echo "${!var}" | sed "s/'/\\'/g" )
+	echo "export $var='$var_data'" >> $OPENVPNDIR/remote.env
 done
 
 cdr2mask ()
 {
-   # Number of args to shift, 255..255, first non-255 byte, zeroes
-   set -- $(( 5 - ($1 / 8) )) 255 255 255 255 $(( (255 << (8 - ($1 % 8))) & 255 )) 0 0 0
-   [ $1 -gt 1 ] && shift $1 || shift
-   echo ${1-0}.${2-0}.${3-0}.${4-0}
+	# Number of args to shift, 255..255, first non-255 byte, zeroes
+	set -- $(( 5 - ($1 / 8) )) 255 255 255 255 $(( (255 << (8 - ($1 % 8))) & 255 )) 0 0 0
+	[ $1 -gt 1 ] && shift $1 || shift
+	echo ${1-0}.${2-0}.${3-0}.${4-0}
 }
 
 echo "=====[ Generating server config ]=============================================="
@@ -91,56 +91,56 @@ echo $OPENVPN_EXTRACONF | sed 's/\\n/\n/g' >> $OPENVPNDIR/server.conf
 
 mkdir -p /dev/net
 if [ ! -c /dev/net/tap ]; then
-    mknod /dev/net/tap c 10 200
+	mknod /dev/net/tap c 10 200
 fi
 
 mkdir -p /dev/net
 if [ ! -c /dev/net/tun ]; then
-    mknod /dev/net/tun c 10 200
+	mknod /dev/net/tun c 10 200
 fi
 
 echo "=====[ Generating certificates ]==============================================="
 if [ ! -d $OPENVPNDIR/easy-rsa ]; then
-   # Copy easy-rsa tools to /etc/openvpn
-   rsync -avz /usr/share/easy-rsa $OPENVPNDIR/
-   cp -R /usr/share/easy-rsa $OPENVPNDIR/
+	# Copy easy-rsa tools to /etc/openvpn
+	rsync -avz /usr/share/easy-rsa $OPENVPNDIR/
+	cp -R /usr/share/easy-rsa $OPENVPNDIR/
 
-   pushd $OPENVPNDIR/easy-rsa
-   cd $OPENVPNDIR/easy-rsa
-   checkpoint
-   easyrsa init-pki || error "Cannot init pki"
-   checkpoint
-   echo -en "$CERT_COUNTRY\n" | easyrsa build-ca nopass || error "Cannot build certificate authority"
-   checkpoint
-   easyrsa build-server-full "$CERT_COMMON_NAME" nopass || error "Cannot create server key"
-   checkpoint
-   easyrsa gen-dh || error "Cannot create dh file"
-   checkpoint
-   openvpn --genkey --secret $EASYRSA_PKI/ta.key
-   popd
+	pushd $OPENVPNDIR/easy-rsa
+	cd $OPENVPNDIR/easy-rsa
+	checkpoint
+	easyrsa init-pki || error "Cannot init pki"
+	checkpoint
+	echo -en "$CERT_COUNTRY\n" | easyrsa build-ca nopass || error "Cannot build certificate authority"
+	checkpoint
+	easyrsa build-server-full "$CERT_COMMON_NAME" nopass || error "Cannot create server key"
+	checkpoint
+	easyrsa gen-dh || error "Cannot create dh file"
+	checkpoint
+	openvpn --genkey --secret $EASYRSA_PKI/ta.key
+	popd
 fi
 
 echo "=====[ Enable tcp forwarding and add iptables MASQUERADE rule ]================"
 [ -z "$OVPN_NATDEVICE" ] && OVPN_NATDEVICE=eth0
 # Setup NAT forwarding if requested
 if [ "$OVPN_DEFROUTE" != "0" ] || [ "$OVPN_NAT" == "1" ] ; then
-    iptables -t nat -C POSTROUTING -s $OVPN_SERVER -o $OVPN_NATDEVICE -j MASQUERADE || {
-      iptables -t nat -A POSTROUTING -s $OVPN_SERVER -o $OVPN_NATDEVICE -j MASQUERADE
-    }
-    for i in "${OVPN_ROUTES[@]}"; do
-        iptables -t nat -C POSTROUTING -s "$i" -o $OVPN_NATDEVICE -j MASQUERADE || {
-          iptables -t nat -A POSTROUTING -s "$i" -o $OVPN_NATDEVICE -j MASQUERADE
-        }
-    done
+	iptables -t nat -C POSTROUTING -s $OVPN_SERVER -o $OVPN_NATDEVICE -j MASQUERADE || {
+		iptables -t nat -A POSTROUTING -s $OVPN_SERVER -o $OVPN_NATDEVICE -j MASQUERADE
+	}
+	for i in "${OVPN_ROUTES[@]}"; do
+	iptables -t nat -C POSTROUTING -s "$i" -o $OVPN_NATDEVICE -j MASQUERADE || {
+		iptables -t nat -A POSTROUTING -s "$i" -o $OVPN_NATDEVICE -j MASQUERADE
+	}
+	done
 fi
 ip -6 route show default 2>/dev/null
 if [ $? = 0 ]; then
-    echo "Enabling IPv6 Forwarding"
-    # If this fails, ensure the docker container is run with --privileged
-    # Could be side stepped with `ip netns` madness to drop privileged flag
-
-    sysctl -w net.ipv6.conf.default.forwarding=1 || echo "Failed to enable IPv6 Forwarding default"
-    sysctl -w net.ipv6.conf.all.forwarding=1 || echo "Failed to enable IPv6 Forwarding"
+	echo "Enabling IPv6 Forwarding"
+	# If this fails, ensure the docker container is run with --privileged
+	# Could be side stepped with `ip netns` madness to drop privileged flag
+	
+	sysctl -w net.ipv6.conf.default.forwarding=1 || echo "Failed to enable IPv6 Forwarding default"
+	sysctl -w net.ipv6.conf.all.forwarding=1 || echo "Failed to enable IPv6 Forwarding"
 fi
 
 

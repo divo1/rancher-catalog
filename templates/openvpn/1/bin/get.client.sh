@@ -9,7 +9,7 @@ openvpn_dir="/etc/openvpn"
 
 function generate {
 	name=$1
-	path="{{ openvpn_dir }}/certs/$name.ovpn"
+	path="$openvpn_dir/clients/$name.ovpn"
 	cat $path
 
 	exit 0

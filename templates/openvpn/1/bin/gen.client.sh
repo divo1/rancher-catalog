@@ -12,7 +12,7 @@ function generate {
 	port=1194
 	server="openvpn.divo.net.pl"
 
-	path="$name.ovpn"
+	path="$openvpn_dir/clients/$name.ovpn"
 
 	cd $openvpn_dir/easy-rsa
 	source vars
@@ -21,37 +21,31 @@ function generate {
 
 	./build-key $name
 
-        serverconf=$(grep -nirl "port $port" {{ openvpn_dir }})
-        proto=$(grep "proto " $serverconf | cut -d" " -f2)
-        dev=$(grep "dev " $serverconf | cut -d" " -f2)
-        dhPath=$(grep "dh " $serverconf | cut -d" " -f2)
-        cipher=$(grep "cipher " $serverconf | cut -d" " -f2)
-        tlsAuthPath=$(grep "tls-auth " $serverconf | cut -d" " -f2)
-
-cat > $path <<- EOF
-client
-dev $dev
-proto $proto
-remote $server $port
-resolv-retry infinite
-nobind
-persist-key
-persist-tun
-ns-cert-type server
-comp-lzo
-verb 3
-user nobody
-group nogroup
-cipher $cipher
-
-key-direction 1
-EOF
-
-
+	serverconf=$(grep -nirl "port $port" $openvpn_dir)
+	proto=$(grep "proto " $serverconf | cut -d" " -f2)
+	dev=$(grep "dev " $serverconf | cut -d" " -f2)
+	dhPath=$(grep "dh " $serverconf | cut -d" " -f2)
+	cipher=$(grep "cipher " $serverconf | cut -d" " -f2)
+	tlsAuthPath=$(grep "tls-auth " $serverconf | cut -d" " -f2)
+	
+	echo "client" >> $path
+	echo "dev $dev" >> $path
+	echo "proto $proto" >> $path
+	echo "remote $server $port" >> $path
+	echo "resolv-retry infinite" >> $path
+	echo "nobind" >> $path
+	echo "persist-key" >> $path
+	echo "persist-tun" >> $path
+	echo "ns-cert-type server" >> $path
+	echo "comp-lzo" >> $path
+	echo "verb 3" >> $path
+	echo "user nobody" >> $path
+	echo "group nogroup" >> $path
+	echo "cipher $cipher" >> $path
+	echo "key-direction 1" >> $path
 	echo "" >> $path
 	echo "" >> $path
 	echo "<ca>" >> $path
-	#cat $EASY_RSA/certs/ca.crt >> $path
 	cat $KEY_DIR/ca.crt >> $path
 	echo "</ca>" >> $path
 	echo "<cert>" >> $path
