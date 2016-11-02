@@ -60,7 +60,7 @@ cat > $OPENVPNDIR/server.conf <<- EOF
 
 server $VPNPOOL_NETWORK $VPNPOOL_NETMASK
 port $REMOTE_PORT
-proto udp
+proto tcp
 dev tap
 dh $EASYRSA_PKI/dh.pem
 push "dhcp-option DNS $PUSHDNS"
@@ -103,45 +103,27 @@ echo "=====[ Generating certificates ]==========================================
 if [ ! -d $OPENVPNDIR/easy-rsa ]; then
 	# Copy easy-rsa tools to /etc/openvpn
 	rsync -avz /usr/share/easy-rsa $OPENVPNDIR/
-	cp -R /usr/share/easy-rsa $OPENVPNDIR/
-
-	pushd $OPENVPNDIR/easy-rsa
-	cd $OPENVPNDIR/easy-rsa
+fi
+if [ ! -d $OPENVPNDIR/pki ]; then
+	mkdir -p $OPENVPNDIR/pki
+	pushd $OPENVPNDIR/pki
 	checkpoint
-	easyrsa init-pki || error "Cannot init pki"
+	easyrsa --batch --pki-dir=$EASYRSA_PKI init-pki || error "Cannot init pki"
 	checkpoint
-	echo -en "$CERT_COUNTRY\n" | easyrsa build-ca nopass || error "Cannot build certificate authority"
+	echo -en "$CERT_COUNTRY\n" | easyrsa --batch --pki-dir=$EASYRSA_PKI build-ca nopass || error "Cannot build certificate authority"
 	checkpoint
-	easyrsa build-server-full "$CERT_COMMON_NAME" nopass || error "Cannot create server key"
+	easyrsa --batch --pki-dir=$EASYRSA_PKI build-server-full "$CERT_COMMON_NAME" nopass || error "Cannot create server key"
 	checkpoint
-	easyrsa gen-dh || error "Cannot create dh file"
+	easyrsa --batch --pki-dir=$EASYRSA_PKI gen-dh || error "Cannot create dh file"
 	checkpoint
 	openvpn --genkey --secret $EASYRSA_PKI/ta.key
 	popd
 fi
 
 echo "=====[ Enable tcp forwarding and add iptables MASQUERADE rule ]================"
-[ -z "$OVPN_NATDEVICE" ] && OVPN_NATDEVICE=eth0
-# Setup NAT forwarding if requested
-if [ "$OVPN_DEFROUTE" != "0" ] || [ "$OVPN_NAT" == "1" ] ; then
-	iptables -t nat -C POSTROUTING -s $OVPN_SERVER -o $OVPN_NATDEVICE -j MASQUERADE || {
-		iptables -t nat -A POSTROUTING -s $OVPN_SERVER -o $OVPN_NATDEVICE -j MASQUERADE
-	}
-	for i in "${OVPN_ROUTES[@]}"; do
-	iptables -t nat -C POSTROUTING -s "$i" -o $OVPN_NATDEVICE -j MASQUERADE || {
-		iptables -t nat -A POSTROUTING -s "$i" -o $OVPN_NATDEVICE -j MASQUERADE
-	}
-	done
-fi
-ip -6 route show default 2>/dev/null
-if [ $? = 0 ]; then
-	echo "Enabling IPv6 Forwarding"
-	# If this fails, ensure the docker container is run with --privileged
-	# Could be side stepped with `ip netns` madness to drop privileged flag
-	
-	sysctl -w net.ipv6.conf.default.forwarding=1 || echo "Failed to enable IPv6 Forwarding default"
-	sysctl -w net.ipv6.conf.all.forwarding=1 || echo "Failed to enable IPv6 Forwarding"
-fi
+echo 1 > /proc/sys/net/ipv4/ip_forward
+iptables -t nat -F
+iptables -t nat -A POSTROUTING -s $VPNPOOL_NETWORK/$VPNPOOL_CIDR -j MASQUERADE
 
 
 #/usr/local/bin/openvpn-get-client-config.sh > $OPENVPNDIR/client.conf
@@ -151,8 +133,8 @@ cat $OPENVPNDIR/server.conf
 echo "==============================================================================="
 
 echo "=====[ OpenVPN Client config ]================================================="
-echo " To regenerate client config, run the 'openvpn-get-client-config.sh' script "
-#echo "--------------------------------------------------------------------------"
+echo " To regenerate client config, run the 'gen.client.sh' script "
+echo "--------------------------------------------------------------------------"
 #cat $OPENVPNDIR/client.conf
 echo ""
 echo "==============================================================================="

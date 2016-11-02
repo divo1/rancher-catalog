@@ -11,15 +11,16 @@ function generate {
 	name=$1
 	port=1194
 	server="openvpn.divo.net.pl"
+	
+	mkdir -p $openvpn_dir/clients/
 
 	path="$openvpn_dir/clients/$name.ovpn"
 
 	cd $openvpn_dir/easy-rsa
-	source vars
 	export EASY_RSA="$openvpn_dir/easy-rsa"
-	export KEY_DIR="$openvpn_dir/easy-rsa/keys"
+	export KEY_DIR="$openvpn_dir/pki/"
 
-	./build-key $name
+	easyrsa --batch --pki-dir=$KEY_DIR build-client-full $name nopass
 
 	serverconf=$(grep -nirl "port $port" $openvpn_dir)
 	proto=$(grep "proto " $serverconf | cut -d" " -f2)
@@ -28,7 +29,7 @@ function generate {
 	cipher=$(grep "cipher " $serverconf | cut -d" " -f2)
 	tlsAuthPath=$(grep "tls-auth " $serverconf | cut -d" " -f2)
 	
-	echo "client" >> $path
+	echo "client" > $path
 	echo "dev $dev" >> $path
 	echo "proto $proto" >> $path
 	echo "remote $server $port" >> $path
@@ -49,10 +50,10 @@ function generate {
 	cat $KEY_DIR/ca.crt >> $path
 	echo "</ca>" >> $path
 	echo "<cert>" >> $path
-	cat $KEY_DIR/$name.crt >> $path
+	cat $KEY_DIR/issued/$name.crt >> $path
 	echo "</cert>" >> $path
 	echo "<key>" >> $path
-	cat $KEY_DIR/$name.key >> $path
+	cat $KEY_DIR/private/$name.key >> $path
 	echo "</key>" >> $path
 	echo "<dh>" >> $path
 	cat $dhPath >> $path
