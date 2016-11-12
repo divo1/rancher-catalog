@@ -2,6 +2,7 @@
 .catalog:
   name: nfs-divo
   version: 0.0.1
+  scale: 3
   description: "Nfs for Rancher. It connect /exports to /srv"
   maintainer: "Mateusz Gorny <divo@divo.net.pl>"
   minimum_rancher_version: 1.0.1
