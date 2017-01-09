@@ -14,7 +14,7 @@
       description: "Ip address or hostname that will be set in client configuration, you can leave default values and replace them in client config later"
       label: "OpenVPN server endpoint address:"
       required: true
-      default: "IP-address-or-hostname"
+      default: "openvpn.server"
       type: "string"
 
     - variable: "REMOTE_PORT"

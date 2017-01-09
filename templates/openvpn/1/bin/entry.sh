@@ -23,7 +23,7 @@ OPENVPNDIR="$OPENVPN"
 [ "$PUSHSEARCH" = "" ]       && export PUSHSEARCH="rancher.internal"
 [ "$DHPARAM_KEY" = "" ]      && export DHPARAM_KEY="2048"
 
-[ "$ROUTE_NETWORK" = "" ]    && export ROUTE_NETWORK="10.42.0.0"
+[ "$ROUTE_NETWORK" = "" ]    && export ROUTE_NETWORK="10.43.0.0"
 [ "$ROUTE_NETMASK" = "" ]    && export ROUTE_NETMASK="255.255.0.0"
 
 export RANCHER_METADATA_API='push "route 169.254.169.250 255.255.255.255"'
@@ -59,13 +59,13 @@ VPNPOOL_NETMASK=$(cdr2mask $VPNPOOL_CIDR)
 cat > $OPENVPNDIR/server.conf <<- EOF
 
 server $VPNPOOL_NETWORK $VPNPOOL_NETMASK
-port $REMOTE_PORT
-proto tcp
+port 1194
+proto udp
 dev tap
 dh $EASYRSA_PKI/dh.pem
 push "dhcp-option DNS $PUSHDNS"
 push "dhcp-option SEARCH $PUSHSEARCH"
-push "route $ROUTE_NETWORK $ROUTE_NETMASK"
+#push "route $ROUTE_NETWORK $ROUTE_NETMASK"
 client-to-client
 link-mtu 1500
 ca $EASYRSA_PKI/ca.crt
