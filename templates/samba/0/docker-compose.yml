@@ -1,9 +1,16 @@
 ---
 docker-nfs:
- image: dperson/samba
- privileged: true
- restart: always
- volumes:
- - /data:/srv/shares
- command:
- - samba.sh -u "samba;11samba)&;10001;samba" -u "divo;I9loter653ck45n645n546un57o80z79q0eb6v;10002;samba" -u "arvelka;I9chrabaszcz653ck;10003;samba" -s "public;/srv/public" -s "users;/srv/shares;no;no;no;divo,arvelka" -s "divo;/srv/divo;no;no;no;divo" -s "arvelka;/srv/arvelka;no;no;no;arvelka"
+  image: dperson/samba
+  privileged: true
+  restart: always
+  volumes:
+  - /data:/srv/shares
+  entrypoint:
+    - samba.sh
+    - '-u "samba;11samba)&;10001;samba"'
+    - '-u "divo;I9loter653ck45n645n546un57o80z79q0eb6v;10002;samba"'
+    - '-u "arvelka;I9chrabaszcz653ck;10003;samba"'
+    - '-s "public;/srv/public"'
+    - '-s "users;/srv/shares;no;no;no;divo,arvelka"'
+    - '-s "divo;/srv/divo;no;no;no;divo"'
+    - '-s "arvelka;/srv/arvelka;no;no;no;arvelka"'
