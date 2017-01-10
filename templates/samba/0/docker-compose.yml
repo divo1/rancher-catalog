@@ -5,10 +5,4 @@ docker-nfs:
   restart: always
   volumes:
   - /data:/srv
-  entrypoint:
-    - samba.sh
-    - '-u "divo;I9loter653ck45n645n546un57o80z79q0eb6v;10001;samba"'
-    - '-u "arvelka;I9chrabaszcz653ck;10001;samba"'
-    - '-s "public;/srv/public;no;no;no;divo,arvelka"'
-    - '-s "divo;/srv/divo;no;no;no;divo"'
-    - '-s "arvelka;/srv/arvelka;no;no;no;arvelka"'
+  entrypoint: /usr/bin/samba.sh -u "divo;I9loter653ck45n645n546un57o80z79q0eb6v;10001;samba" -s "divo;/srv/divo;no;no;no;divo"
