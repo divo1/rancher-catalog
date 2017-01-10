@@ -1,8 +1,9 @@
 ---
 docker-nfs:
- image: cpuguy83/nfs-server
+ image: fuzzle/docker-nfs-server
  privileged: true
-# volumes:
-# - /srv:/exports
+ restart: always
+ volumes:
+ - /data:/nfs
  command:
  - /data
