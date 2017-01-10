@@ -1,7 +1,7 @@
 ---
 name: glusterfs
 description: "Stworzenie glusterfs"
-version: 0.2.1
+version: 0
 category: fs
 maintainer: divo
 license: license
