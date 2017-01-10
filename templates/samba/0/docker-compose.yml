@@ -4,13 +4,11 @@ docker-nfs:
   privileged: true
   restart: always
   volumes:
-  - /data:/srv/shares
+  - /data:/srv
   entrypoint:
     - samba.sh
-    - '-u "samba;11samba)&;10001;samba"'
-    - '-u "divo;I9loter653ck45n645n546un57o80z79q0eb6v;10002;samba"'
-    - '-u "arvelka;I9chrabaszcz653ck;10003;samba"'
-    - '-s "public;/srv/public"'
-    - '-s "users;/srv/shares;no;no;no;divo,arvelka"'
+    - '-u "divo;I9loter653ck45n645n546un57o80z79q0eb6v;10001;samba"'
+    - '-u "arvelka;I9chrabaszcz653ck;10001;samba"'
+    - '-s "public;/srv/public;no;no;no;divo,arvelka"'
     - '-s "divo;/srv/divo;no;no;no;divo"'
     - '-s "arvelka;/srv/arvelka;no;no;no;arvelka"'
