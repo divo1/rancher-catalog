@@ -2,7 +2,7 @@
 docker-nfs:
  image: cpuguy83/nfs-server
  privileged: true
- volumes:
- - /srv:/exports
+# volumes:
+# - /srv:/exports
  command:
- - /exports
+ - /data
