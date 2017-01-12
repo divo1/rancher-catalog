@@ -1,12 +1,12 @@
 ---
-openvpn-httpdigest-data:
-  labels:
-    io.rancher.container.start_once: 'true'
-  entrypoint:
-  - /bin/true
-  image: busybox
-  volumes:
-  - /data/etc/openvpn/:/etc/openvpn/
+#openvpn-httpdigest-data:
+#  labels:
+#    io.rancher.container.start_once: 'true'
+#  entrypoint:
+#  - /bin/true
+#  image: busybox
+#  volumes:
+#  - /data/etc/openvpn/:/etc/openvpn/
 
 openvpn-httpdigest-server:
   ports:
@@ -29,5 +29,7 @@ openvpn-httpdigest-server:
     io.rancher.container.pull_image: always
   image: quay.io/divo/openvpn
   privileged: true
-  volumes_from:
-  - openvpn-httpdigest-data
+  volumes:
+    - /data/etc/openvpn/:/etc/openvpn/
+#  volumes_from:
+#  - openvpn-httpdigest-data
