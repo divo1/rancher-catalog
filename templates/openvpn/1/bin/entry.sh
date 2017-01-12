@@ -139,4 +139,7 @@ echo "--------------------------------------------------------------------------
 echo ""
 echo "==============================================================================="
 echo "=====[ Starting OpenVPN server ]==============================================="
-/usr/sbin/openvpn --cd $OPENVPN --config server.conf &
+#/usr/sbin/openvpn --cd $OPENVPN --config server.conf &
+
+echo "Running '/usr/sbin/openvpn --cd $OPENVPN --config server.conf'"
+exec /usr/sbin/openvpn --cd $OPENVPN --config server.conf

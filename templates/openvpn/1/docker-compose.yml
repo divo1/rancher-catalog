@@ -6,7 +6,7 @@ openvpn-httpdigest-data:
   - /bin/true
   image: busybox
   volumes:
-  - /etc/openvpn/
+  - /data/etc/openvpn/:/etc/openvpn/
 
 openvpn-httpdigest-server:
   ports:
