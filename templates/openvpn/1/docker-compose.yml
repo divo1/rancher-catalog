@@ -11,9 +11,9 @@ openvpn-httpdigest-data:
 
 openvpn-httpdigest-server:
   expose:
-    - 1194
+    - "1194"
   ports:
-    - 1194:1194/tcp
+    - 1194:1194
   environment:
     AUTH_METHOD: httpbasic
     CERT_COUNTRY: ${CERT_COUNTRY}

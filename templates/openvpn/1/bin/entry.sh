@@ -60,7 +60,6 @@ cat > $OPENVPNDIR/server.conf <<- EOF
 
 server $VPNPOOL_NETWORK $VPNPOOL_NETMASK
 port 1194
-#proto udp
 proto tcp
 dev tap
 dh $EASYRSA_PKI/dh.pem
