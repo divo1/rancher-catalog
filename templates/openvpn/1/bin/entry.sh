@@ -71,7 +71,7 @@ link-mtu 1500
 ca $EASYRSA_PKI/ca.crt
 cert $EASYRSA_PKI/issued/$CERT_COMMON_NAME.crt
 key $EASYRSA_PKI/private/$CERT_COMMON_NAME.key
-tls-auth $EASYRSA_PKI/ta.key 0
+#tls-auth $EASYRSA_PKI/ta.key 0
 cipher AES-256-CBC
 auth SHA1
 $RANCHER_METADATA_API

@@ -43,7 +43,7 @@ function generate {
 	echo "user nobody" >> $path
 	echo "group nogroup" >> $path
 	echo "cipher $cipher" >> $path
-	echo "key-direction 1" >> $path
+#	echo "key-direction 1" >> $path
 	echo "" >> $path
 	echo "" >> $path
 	echo "<ca>" >> $path
@@ -58,9 +58,9 @@ function generate {
 	echo "<dh>" >> $path
 	cat $dhPath >> $path
 	echo "</dh>" >> $path
-	echo "<tls-auth>" >> $path
-	cat $tlsAuthPath >> $path
-	echo "</tls-auth>" >> $path
+#	echo "<tls-auth>" >> $path
+#	cat $tlsAuthPath >> $path
+#	echo "</tls-auth>" >> $path
 	
 	cat $path
 
