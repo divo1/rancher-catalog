@@ -1,5 +1,5 @@
 ---
-docker-nfs:
+docker-samba:
   image: dperson/samba
   privileged: true
   restart: always
