@@ -25,7 +25,7 @@ openvpn-httpdigest-server:
     VPNPOOL_CIDR: ${VPNPOOL_CIDR}
     OPENVPN_EXTRACONF: ${OPENVPN_EXTRACONF}
   labels:
-    io.rancher.sidekicks: openvpn-httpdigest-data
+#    io.rancher.sidekicks: openvpn-httpdigest-data
     io.rancher.container.pull_image: always
   image: quay.io/divo/openvpn
   privileged: true
