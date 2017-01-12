@@ -7,11 +7,11 @@ openvpn-httpdigest-data:
     - /bin/true
   image: busybox
   volumes:
-    - /data/etc/openvpn/:/etc/openvpn/
+    - /etc/openvpn/
 
 openvpn-httpdigest-server:
   ports:
-  - 1194:1194/udp
+    - 1194:1194/udp
   environment:
     AUTH_METHOD: httpbasic
     CERT_COUNTRY: ${CERT_COUNTRY}
@@ -31,4 +31,4 @@ openvpn-httpdigest-server:
   image: quay.io/divo/openvpn
   privileged: true
   volumes_from:
-  - openvpn-httpdigest-data
+    - openvpn-httpdigest-data
