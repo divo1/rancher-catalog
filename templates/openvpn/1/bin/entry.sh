@@ -83,8 +83,9 @@ persist-tun
 #client-cert-not-required
 
 status /etc/openvpn/status.server.log
+verb 9
 
-script-security 3 system
+#script-security 3 system
 #auth-user-pass-verify /usr/local/bin/openvpn-auth.sh via-env
 
 EOF
