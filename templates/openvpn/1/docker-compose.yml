@@ -10,6 +10,8 @@ openvpn-httpdigest-data:
     - /data/etc/openvpn/:/etc/openvpn/
 
 openvpn-httpdigest-server:
+  expose:
+    - 1194
   ports:
     - 1194:1194/tcp
   environment:
