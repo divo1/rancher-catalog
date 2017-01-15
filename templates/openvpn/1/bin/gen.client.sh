@@ -37,7 +37,7 @@ function generate {
 	echo "nobind" >> $path
 	echo "persist-key" >> $path
 	echo "persist-tun" >> $path
-	echo "ns-cert-type server" >> $path
+#	echo "ns-cert-type server" >> $path
 	echo "comp-lzo" >> $path
 	echo "verb 3" >> $path
 	echo "user nobody" >> $path

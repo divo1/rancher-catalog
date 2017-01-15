@@ -68,7 +68,7 @@ push "dhcp-option SEARCH $PUSHSEARCH"
 #push "route $ROUTE_NETWORK $ROUTE_NETMASK"
 #ns-cert-type server
 #remote-cert-tls server
-#client-to-client
+client-to-client
 link-mtu 1500
 ca $EASYRSA_PKI/ca.crt
 cert $EASYRSA_PKI/issued/$CERT_COMMON_NAME.crt
