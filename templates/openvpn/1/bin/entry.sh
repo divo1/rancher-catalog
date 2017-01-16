@@ -67,6 +67,7 @@ dh $EASYRSA_PKI/dh.pem
 push "dhcp-option DNS $PUSHDNS"
 push "dhcp-option SEARCH $PUSHSEARCH"
 #push "route add -net $ROUTE_NETWORK/$ROUTE_CIDR gw $VPNPOOL_NETWORK"
+push "route $ROUTE_NETWORK $ROUTE_NETMASK"
 #ns-cert-type server
 #remote-cert-tls server
 client-to-client
@@ -88,9 +89,9 @@ persist-tun
 status /etc/openvpn/status.server.log
 verb 9
 
-script-security 3 system
+#script-security 3 system
 #auth-user-pass-verify /usr/local/bin/openvpn-auth.sh via-env
-/sbin/ip route add $ROUTE_NETWORK/$ROUTE_CIDR via $VPNPOOL_NETWORK
+#/sbin/ip route add $ROUTE_NETWORK/$ROUTE_CIDR via $VPNPOOL_NETWORK
 
 EOF
 
