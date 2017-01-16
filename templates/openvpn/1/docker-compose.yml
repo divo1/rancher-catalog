@@ -27,6 +27,8 @@ openvpn-httpdigest-server:
     VPNPOOL_NETWORK: ${VPNPOOL_NETWORK}
     VPNPOOL_CIDR: ${VPNPOOL_CIDR}
     OPENVPN_EXTRACONF: ${OPENVPN_EXTRACONF}
+    ROUTE_NETWORK: ${ROUTE_NETWORK}
+    ROUTE_CIDR: ${ROUTE_CIDR}
   labels:
     io.rancher.sidekicks: openvpn-httpdigest-data
     io.rancher.container.pull_image: always

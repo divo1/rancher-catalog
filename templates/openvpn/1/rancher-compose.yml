@@ -60,6 +60,36 @@
         - 28
         - 29
         - 30
+ 
+    - variable: "ROUTE_NETWORK"
+      description: "VPN subnet for OpenVPN to draw client addresses from"
+      label: "Route network:"
+      required: true
+      default: "10.42.0.0"
+      type: "string"
+ 
+    - variable: "ROUTE_CIDR"
+      description: "CIDR netmask for VPN subnet"
+      label: "Route CIDR netmask:"
+      required: true
+      default: "16"
+      type: "enum"
+      options:
+        - 16
+        - 17
+        - 18
+        - 19
+        - 20
+        - 21
+        - 22
+        - 23
+        - 24
+        - 25
+        - 26
+        - 27
+        - 28
+        - 29
+        - 30
 
     - variable: "CERT_COMMON_NAME"
       description: "Common name"

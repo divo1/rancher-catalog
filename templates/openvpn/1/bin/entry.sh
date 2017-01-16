@@ -55,6 +55,7 @@ cdr2mask ()
 
 echo "=====[ Generating server config ]=============================================="
 VPNPOOL_NETMASK=$(cdr2mask $VPNPOOL_CIDR)
+ROUTE_NETMASK=$(cdr2mask $ROUTE_CIDR)
 
 cat > $OPENVPNDIR/server.conf <<- EOF
 
@@ -65,7 +66,7 @@ dev tap
 dh $EASYRSA_PKI/dh.pem
 push "dhcp-option DNS $PUSHDNS"
 push "dhcp-option SEARCH $PUSHSEARCH"
-push "route $ROUTE_NETWORK $ROUTE_NETMASK"
+push "route add $ROUTE_NETWORK mask $ROUTE_NETMASK gw $VPNPOOL_NETWORK"
 #ns-cert-type server
 #remote-cert-tls server
 client-to-client
