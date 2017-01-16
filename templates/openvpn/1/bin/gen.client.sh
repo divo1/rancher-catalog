@@ -45,6 +45,10 @@ function generate {
 	echo "cipher $cipher" >> $path
 	echo "key-direction 1" >> $path
 	echo "" >> $path
+	echo "script-security 2" >> $path
+	echo "up /etc/openvpn/update-resolv-conf" >> $path
+	echo "down /etc/openvpn/update-resolv-conf" >> $path
+	echo "" >> $path
 	echo "" >> $path
 	echo "<ca>" >> $path
 	cat $KEY_DIR/ca.crt >> $path
