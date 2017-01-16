@@ -66,7 +66,7 @@ dev tap
 dh $EASYRSA_PKI/dh.pem
 push "dhcp-option DNS $PUSHDNS"
 push "dhcp-option SEARCH $PUSHSEARCH"
-#push "route add $ROUTE_NETWORK mask $ROUTE_NETMASK gw $VPNPOOL_NETWORK"
+push "route add -net $ROUTE_NETWORK/$ROUTE_CIDR gw $VPNPOOL_NETWORK"
 #ns-cert-type server
 #remote-cert-tls server
 client-to-client

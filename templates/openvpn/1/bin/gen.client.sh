@@ -57,7 +57,7 @@ function generate {
 	echo "cipher $cipher" >> $path
 	echo "key-direction 1" >> $path
 	echo "" >> $path
-	echo "route add $ROUTE_NETWORK/$ROUTE_CIDR gw $(getGWFromNet $VPNPOOL_NETWORK)" >> $path
+#	echo "route add $ROUTE_NETWORK/$ROUTE_CIDR gw $(getGWFromNet $VPNPOOL_NETWORK)" >> $path
 	echo "" >> $path
 	echo "script-security 2" >> $path
 	echo "up /etc/openvpn/update-resolv-conf" >> $path
