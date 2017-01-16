@@ -5,7 +5,19 @@
 #
 # @author Mateusz Górny
 
+cdr2mask () {
+	# Number of args to shift, 255..255, first non-255 byte, zeroes
+	set -- $(( 5 - ($1 / 8) )) 255 255 255 255 $(( (255 << (8 - ($1 % 8))) & 255 )) 0 0 0
+	[ $1 -gt 1 ] && shift $1 || shift
+	echo ${1-0}.${2-0}.${3-0}.${4-0}
+}
+
+getGWFromNet() {
+	echo $1 | awk -F'.' '{print $1"."$2"."$3".1"}'
+}
+
 openvpn_dir="/etc/openvpn"
+ROUTE_NETMASK=$(cdr2mask $ROUTE_CIDR)
 
 function generate {
 	name=$1
@@ -45,7 +57,7 @@ function generate {
 	echo "cipher $cipher" >> $path
 	echo "key-direction 1" >> $path
 	echo "" >> $path
-	echo "route add $ROUTE_NETWORK mask $ROUTE_NETMASK gw $server" >> $path
+	echo "route add $ROUTE_NETWORK/$ROUTE_CIDR gw $(getGWFromNet $VPNPOOL_NETWORK)" >> $path
 	echo "" >> $path
 	echo "script-security 2" >> $path
 	echo "up /etc/openvpn/update-resolv-conf" >> $path
