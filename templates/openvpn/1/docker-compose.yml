@@ -32,7 +32,7 @@ openvpn-httpdigest-server:
   labels:
     io.rancher.sidekicks: openvpn-httpdigest-data
     io.rancher.container.pull_image: always
-  image: quay.io/divo/openvpn
+  image: divo/openvpn
   privileged: true
   volumes_from:
     - openvpn-httpdigest-data
