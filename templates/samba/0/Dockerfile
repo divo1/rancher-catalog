@@ -1,8 +1,6 @@
 FROM dperson/samba
 MAINTAINER Mateusz Górny <divo@divo.net.pl>
 
-VOLUME ["/srv/"]
-
 RUN addgroup smbgroup && \
 	mkdir -p /srv/shares/home && \
 	mkdir -p /srv/shares/public && \
@@ -20,3 +18,4 @@ RUN chown smbuser.smbgroup /etc/samba/smb.conf
 
 EXPOSE 137/udp 138/udp 139 445
 CMD ["samba.sh"]
+VOLUME ["/srv/"]
