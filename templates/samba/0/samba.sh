@@ -18,6 +18,15 @@
 
 set -o nounset                              # Treat unset variables as an error
 
+mkdir -p /srv/shares/home
+mkdir -p /srv/shares/public
+
+chown smbuser.smbgroup /srv/shares/public
+chown smbuser.smbgroup /srv/shares/home
+
+chmod 0770 /srv/shares/public
+chown smbuser.smbgroup /etc/samba/smb.conf
+
 ### charmap: setup character mapping for file/directory names
 # Arguments:
 #   chars) from:to character mappings separated by ','

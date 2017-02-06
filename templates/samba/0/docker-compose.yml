@@ -9,6 +9,6 @@ docker-samba:
     - 139
     - 445
   volumes:
-    - /data.secure/samba/srv/:/srv
+    - /data.secure/samba/srv/:/srv/
   entrypoint: /usr/bin/samba.sh
   command: $SAMBA_ARGS
