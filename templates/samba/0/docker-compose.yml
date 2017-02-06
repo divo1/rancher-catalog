@@ -7,7 +7,8 @@ samba-data:
     - /bin/true
   image: busybox
   volumes:
-    - /data.secure/samba/srv/:/srv/
+    - /data.secure/samba/srv/shares/public:/srv/shares/public/
+    - /data.secure/samba/srv/shares/home:/srv/shares/home/
 
 docker-samba:
   image: divo/samba
