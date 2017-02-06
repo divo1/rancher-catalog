@@ -1,4 +1,15 @@
 ---
+samba-data:
+  labels:
+    io.rancher.container.start_once: 'true'
+  net: none
+  entrypoint:
+    - /bin/true
+  image: busybox
+  volumes:
+    - /data.secure/samba/srv/:/srv/
+    - /data.secure/samba/etc/samba/:/etc/samba/
+
 docker-samba:
   image: divo/samba
   privileged: true
@@ -8,7 +19,10 @@ docker-samba:
     - 138
     - 139
     - 445
-  volumes:
-    - /data.secure/samba/srv/:/srv/
+  labels:
+    io.rancher.sidekicks: samba-data
+    io.rancher.container.pull_image: always
+  volumes_from:
+    - samba-data
   entrypoint: /usr/bin/samba.sh
   command: $SAMBA_ARGS
