@@ -8,3 +8,9 @@
   minimum_rancher_version: 1.0.1
   maximum_rancher_version: 2.0.0
   uuid: samba-divo-1
+  questions:
+    - variable: "SAMBA_ARGS"
+      description: "String with argument passes to samba"
+      label: "Users and pass args:"
+      required: true
+      type: "string"

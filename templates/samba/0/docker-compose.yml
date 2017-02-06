@@ -1,6 +1,6 @@
 ---
 docker-samba:
-  image: dperson/samba
+  image: divo/samba
   privileged: true
   restart: always
   expose:
@@ -11,4 +11,4 @@ docker-samba:
   volumes:
     - /data.secure/samba/srv/:/srv
     - /data.secure/samba/etc/samba:/etc/samba/
-  entrypoint: /usr/bin/samba.sh -p -u "divo;I9loter653ck45n645n546un57o80z79q0eb6v" -u "arvelka;I9chrabaszcz653ck" -s "arvelka;/srv/arvelka;no;no;no;arvelka" -s "divo;/srv/divo;no;no;no;divo"
+  entrypoint: /usr/bin/samba.sh $SAMBA_ARGS
