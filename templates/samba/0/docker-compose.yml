@@ -11,4 +11,5 @@ docker-samba:
   volumes:
     - /data.secure/samba/srv/:/srv
     - /data.secure/samba/etc/samba:/etc/samba/
-  entrypoint: /usr/bin/samba.sh $SAMBA_ARGS
+  entrypoint: /usr/bin/samba.sh
+  command: $SAMBA_ARGS
