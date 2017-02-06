@@ -110,8 +110,13 @@ timezone() { local timezone="${1:-EST5EDT}"
 # Return: user added to container
 user() { local name="${1}" passwd="${2}" id="${3:-""}" group="${4:-"smbgroup"}"
     [[ "$group" ]] && { grep -q "^$group:" /etc/group || groupadd "$group"; }
-    useradd "$name" -M ${id:+-u $id} ${group:+-g $group}
-    echo -e "$passwd\n$passwd" | smbpasswd -s -a "$name"
+    
+    if id "$1" >/dev/null 2>&1; then
+        echo "user exists"
+    else
+        useradd "$name" -M ${id:+-u $id} ${group:+-g $group}
+        echo -e "$passwd\n$passwd" | smbpasswd -s -a "$name"
+    fi
 #    echo -e "$passwd\n$passwd" | /usr/bin/passwd $name
 }
 
