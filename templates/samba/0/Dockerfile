@@ -18,4 +18,4 @@ RUN chmod 0770 /srv/shares/public
 RUN chown smbuser.smbgroup /etc/samba/smb.conf
 
 EXPOSE 137/udp 138/udp 139 445
-ENTRYPOINT ["samba.sh"]
+CMD ["samba.sh"]

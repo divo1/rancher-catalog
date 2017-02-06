@@ -23,5 +23,5 @@ docker-samba:
     io.rancher.container.pull_image: always
   volumes_from:
     - samba-data
-  entrypoint: /usr/bin/samba.sh
-  command: $SAMBA_ARGS
+#  entrypoint: /usr/bin/samba.sh
+  command: /usr/bin/samba.sh $SAMBA_ARGS
