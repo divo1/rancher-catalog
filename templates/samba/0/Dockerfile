@@ -1,5 +1,5 @@
 FROM dperson/samba
-MAINTAINER Mateusz Górny <divo@divo.net.pl
+MAINTAINER Mateusz Górny <divo@divo.net.pl>
 
 RUN addgroup smbgroup
 RUN mkdir -p /srv/shares/home

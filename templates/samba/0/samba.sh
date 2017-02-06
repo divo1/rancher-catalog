@@ -18,6 +18,8 @@
 
 set -o nounset                              # Treat unset variables as an error
 
+echo "11111" > /srv2/aaaa
+
 ### charmap: setup character mapping for file/directory names
 # Arguments:
 #   chars) from:to character mappings separated by ','
