@@ -18,6 +18,8 @@
 
 set -o nounset                              # Treat unset variables as an error
 
+echo $0 $1 $2
+
 ### user: add a user
 # Arguments:
 #   name) for user
