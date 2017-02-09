@@ -19,10 +19,12 @@ docker-samba:
     - 138
     - 139
     - 445
+  environment:
+    SAMBA_ARGS: ${SAMBA_ARGS}
   labels:
     io.rancher.sidekicks: samba-data
     io.rancher.container.pull_image: always
   volumes_from:
     - samba-data
-  entrypoint: /usr/bin/start.sh $SAMBA_ARGS
+#  entrypoint: /usr/bin/start.sh $SAMBA_ARGS
 #  command: /usr/bin/samba.sh $SAMBA_ARGS

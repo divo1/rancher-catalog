@@ -25,4 +25,4 @@ VOLUME /config /shared
 
 EXPOSE 137/udp 138/udp 139 445
 
-ENTRYPOINT ["/usr/bin/start.sh", "$SAMBA_ARGS"]
+ENTRYPOINT ["/usr/bin/start.sh"]
