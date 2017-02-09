@@ -14,8 +14,6 @@ docker-samba:
   image: divo/samba
   privileged: true
   restart: always
-  args:
-    - $SAMBA_PASS
   expose:
     - 137
     - 138
