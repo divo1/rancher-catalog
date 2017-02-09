@@ -14,6 +14,8 @@ docker-samba:
   image: divo/samba
   privileged: true
   restart: always
+  args:
+    - $SAMBA_PASS
   expose:
     - 137
     - 138
@@ -25,4 +27,4 @@ docker-samba:
   volumes_from:
     - samba-data
 #  entrypoint: /usr/bin/samba.sh
-  command: /usr/bin/samba.sh $SAMBA_ARGS
+#  command: /usr/bin/samba.sh $SAMBA_ARGS
