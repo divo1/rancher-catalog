@@ -14,7 +14,7 @@ docker-samba:
   image: divo/samba
   privileged: true
   restart: always
-  expose:
+  ports:
     - 137
     - 138
     - 139
