@@ -15,10 +15,10 @@ docker-samba:
   privileged: true
   restart: always
   ports:
-    - 137
-    - 138
-    - 139
-    - 445
+    - 137:137
+    - 138:138
+    - 139:139
+    - 445:445
   environment:
     SAMBA_ARGS: ${SAMBA_ARGS}
   labels:
