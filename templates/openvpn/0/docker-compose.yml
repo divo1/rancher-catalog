@@ -1,4 +1,10 @@
- version: '1'
- services:
-   openvpn:
-     image: linuxserver/openvpn-as
+---
+openvpn-httpdigest-data:
+  labels:
+    io.rancher.container.start_once: 'true'
+  net: none
+  entrypoint:
+    - /bin/true
+  image: busybox
+  volumes:
+    - /data/etc/openvpn/:/etc/openvpn/
