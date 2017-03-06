@@ -7,11 +7,9 @@ openvpn-httpdigest-data:
     - /bin/true
   image: busybox
   volumes:
-    - /data/etc/openvpn/:/etc/openvpn/
+    - /data.secure/etc/openvpn/:/etc/openvpn/
 
 openvpn-httpdigest-server:
-  expose:
-    - 1194
   ports:
     - 1194:1194
   environment:
