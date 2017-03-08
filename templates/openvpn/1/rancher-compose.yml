@@ -24,12 +24,12 @@
       default: "1194"
       type: "string"
 
-#    - variable: "DHPARAM_KEY"
-#      description: "Set dhparam key size"
-#      label: "Set dhparam key size: "
-#      required: true
-#      default: "1028"
-#      type: "string"
+    - variable: "DHPARAM_KEY"
+      description: "Set dhparam key size"
+      label: "Set dhparam key size: "
+      required: true
+      default: "1028"
+      type: "string"
  
     - variable: "VPNPOOL_NETWORK"
       description: "VPN subnet for OpenVPN to draw client addresses from"
