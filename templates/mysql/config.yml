@@ -1,7 +1,12 @@
 ---
 name: mysql
-description: "Utworzenie bazy danych"
-version: 0.3
+description: |
+    MYSQL
+    Aby dodać hasło trzeba wejść do shell kontenera
+    zalogować się do mysql (jednorazowe hasło w logu)
+    oraz wykonać:
+    ALTER USER root IDENTIFIED BY 'my-secret-pw';
+version: 0.4
 category: sql
 maintainer: divo
 license: license

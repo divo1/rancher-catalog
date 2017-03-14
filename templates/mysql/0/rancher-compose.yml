@@ -1,7 +1,7 @@
 ---
 .catalog:
-  name: wordpress-divo
-  version: 0.3
+  name: mysql-divo
+  version: 0.4
   scale: 1
   description: |
     MYSQL
@@ -12,4 +12,4 @@
   maintainer: "Mateusz Gorny <divo@divo.net.pl>"
   minimum_rancher_version: 1.0.1
   maximum_rancher_version: 2.0.0
-  uuid: wordpress-divo-1
+  uuid: mysql-divo-1

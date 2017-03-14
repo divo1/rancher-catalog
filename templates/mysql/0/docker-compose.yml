@@ -9,7 +9,7 @@ mysql-data:
   volumes:
     - /data.secure/var/lib/mysql:/var/lib/mysql
 
-docker-samba:
+mysql-samba:
   image: mysql/mysql-server
   privileged: true
   restart: always
