@@ -4,12 +4,11 @@
   version: 0.3
   scale: 1
   description: |
-    "MYSQL
+    MYSQL
     Aby dodać hasło trzeba wejść do shell kontenera
     zalogować się do mysql (jednorazowe hasło w logu)
     oraz wykonać:
     ALTER USER root IDENTIFIED BY 'my-secret-pw';
-    "
   maintainer: "Mateusz Gorny <divo@divo.net.pl>"
   minimum_rancher_version: 1.0.1
   maximum_rancher_version: 2.0.0
