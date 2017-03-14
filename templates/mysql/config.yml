@@ -1,0 +1,8 @@
+---
+name: mysql
+description: "Utworzenie bazy danych"
+version: 0.1
+category: sql
+maintainer: divo
+license: license
+projectURL: https://mysql.com/

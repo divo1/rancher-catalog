@@ -1,0 +1,23 @@
+---
+samba-data:
+  labels:
+    io.rancher.container.start_once: 'true'
+  net: none
+  entrypoint:
+    - /bin/true
+  image: busybox
+  volumes:
+    - /data.secure/var/lib/mysql:/var/lib/mysql
+
+docker-samba:
+  image: mysql/mysql-server
+  privileged: true
+  restart: always
+  environment:
+    MYSQL_RANDOM_ROOT_PASSWORD: yes
+    MYSQL_ONETIME_PASSWORD: yes
+  labels:
+    io.rancher.sidekicks: mysql-data
+    io.rancher.container.pull_image: always
+  volumes_from:
+    - mysql-data
