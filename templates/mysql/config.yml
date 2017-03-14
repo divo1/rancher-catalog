@@ -1,7 +1,7 @@
 ---
 name: mysql
 description: "Utworzenie bazy danych"
-version: 0.1
+version: 0.2
 category: sql
 maintainer: divo
 license: license
