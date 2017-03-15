@@ -17,8 +17,6 @@ services:
       - mysql:mysql
     volumes:
       - /data.secure/var/www/${DOMAIN}/:/var/www/html/
-    ports:
-      - 8080:80
     environment:
       WORDPRESS_DB_PASSWORD: "SXykY4oC5fLnM89eY6XjGn5kQAsn48"
 
