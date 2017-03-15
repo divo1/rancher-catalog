@@ -1,5 +1,5 @@
 ---
-wordpress:
+divo-wordpress:
   labels:
     io.rancher.container.pull_image: always
     rap.host: "${DOMAIN}"
@@ -9,11 +9,11 @@ wordpress:
     rap.le_email: "divo@divo.net.pl"
   image: wordpress
   links:
-    - db:mysql
+    - divo-db:mysql
   volumes:
     - /data.secure/var/www/${DOMAIN}/:/var/www/html/
 
-db:
+divo-db:
   image: mariadb
   labels:
     io.rancher.container.start_once: 'true'
