@@ -4,6 +4,11 @@
   description: "Blog tool, publishing platform and CMS"
   uuid: Wordpress-0
   minimum_rancher_version: v0.51.0
-
+  questions:
+    - variable: "DOMAIN"
+      description: "Domain where blog is"
+      label: "Domain where blog is"
+      required: true
+      type: "string"
 
 wordpress:

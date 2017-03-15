@@ -1,9 +1,17 @@
+---
 wordpress:
   image: wordpress
   links:
     - db:mysql
+  volumes:
+    - /data.secure/var/www/${DOMAIN}/:/var/www/html/
 
 db:
   image: mariadb
+  labels:
+    io.rancher.container.start_once: 'true'
+  net: none
+  volumes:
+    - /data.secure/mysql/${DOMAIN}/:/var/lib/mysql
   environment:
-    MYSQL_ROOT_PASSWORD: example
+    MYSQL_ROOT_PASSWORD: "wudj6es3#$%yd31@"
