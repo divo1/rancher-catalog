@@ -1,5 +1,6 @@
 ---
 wordpress:
+  label:
     io.rancher.container.pull_image: always
     rap.host: "${DOMAIN}"
     rap.port: 443
