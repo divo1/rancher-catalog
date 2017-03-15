@@ -21,4 +21,4 @@ divo-db:
   volumes:
     - /data.secure/mysql/${DOMAIN}/:/var/lib/mysql
   environment:
-    MYSQL_ROOT_PASSWORD: "wudj6es3#$%yd31@"
+    MYSQL_ROOT_PASSWORD: "SXykY4oC5fLnM89eY6XjGn5kQAsn48"
