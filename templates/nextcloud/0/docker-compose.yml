@@ -32,6 +32,7 @@ services:
     - DB_NAME=nextcloud
 
     - NEXTCLOUD_URL=http://cloud.example.com:10080
+    - NEXTCLOUD_FQDN=localhost
 
     - NEXTCLOUD_ADMIN_USER=
     - NEXTCLOUD_ADMIN_PASSWORD=
