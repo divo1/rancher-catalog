@@ -10,7 +10,7 @@ services:
     - DB_PASS=password
     - DB_NAME=nextcloud
     volumes:
-    - /data/nextcloud/postgresql:/var/lib/postgresql
+    - /data.secure/nextcloud/postgresql:/var/lib/postgresql
 
   nextcloud:
     restart: always
@@ -38,7 +38,7 @@ services:
     depends_on:
     - postgresql
     volumes:
-    - /data/nextcloud/nextcloud:/var/lib/nextcloud
+    - /data.secure/nextcloud/nextcloud:/var/lib/nextcloud
 
   nginx:
     restart: always
