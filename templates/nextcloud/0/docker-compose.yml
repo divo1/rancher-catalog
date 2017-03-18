@@ -8,7 +8,7 @@ services:
     environment:
     - DB_USER=nextcloud
     - DB_PASS=password
-    - DB_NAME=nextcloud_db
+    - DB_NAME=nextcloud
     volumes:
     - /data.secure/nextcloud/postgresql:/var/lib/postgresql
 
@@ -29,7 +29,7 @@ services:
     - DB_HOST=postgresql
     - DB_USER=nextcloud
     - DB_PASS=password
-    - DB_NAME=nextcloud_db
+    - DB_NAME=nextcloud
 
     - NEXTCLOUD_URL=http://cloud.example.com:10080
 
