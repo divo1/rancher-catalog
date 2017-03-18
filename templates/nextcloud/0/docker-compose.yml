@@ -47,7 +47,7 @@ services:
     labels:
       rap.host: "nc.divo.net.pl"
       rap.port: 80
-      rap.proto: https
+      rap.proto: http
       rap.le_host: "nc.divo.net.pl"
       rap.le_email: "divo@divo.net.pl"
     environment:
