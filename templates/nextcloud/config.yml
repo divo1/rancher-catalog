@@ -1,0 +1,5 @@
+name: Nextcloud
+description: |
+  Nextcloud is a self-hosted open source application for file hosting and sharing.
+version: v0.1
+category: cloud
