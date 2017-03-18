@@ -17,7 +17,7 @@ services:
     image: sameersbn/nextcloud:11.0.1
     command: app:nextcloud
     links:
-      postgresql:postgresql
+    - postgresql:postgresql
     labels:
       io.rancher.container.pull_image: always
       rap.host: "nc.divo.net.pl"
