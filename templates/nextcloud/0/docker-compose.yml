@@ -17,7 +17,7 @@ services:
     image: sameersbn/nextcloud:11.0.1
     command: app:nextcloud
     environment:
-    - DEBUG=false
+    - DEBUG=true
     - TZ=Europe/Warsaw
 
     - DB_TYPE=pgsql
