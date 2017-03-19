@@ -15,7 +15,7 @@ services:
     links:
       - db:mysql
     volumes:
-      - /data.secure/var/www/${DOMAIN}/:/var/www/html/
+      - /data.secure/var/www/${DOMAIN}/:/usr/src/modx/
   db:
     image: mysql
     environment:
