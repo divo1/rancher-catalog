@@ -16,8 +16,13 @@ services:
       - db:mysql
     volumes:
       - /data/var/www/${DOMAIN}/:/usr/src/modx/
+    depends_on:
+    - mysql
+
   db:
-    image: mysql
+    image: mariadb
+    volumes:
+      - /data/mysql/${DOMAIN}/:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: example
     command: mysqld --sql-mode=NO_ENGINE_SUBSTITUTION
