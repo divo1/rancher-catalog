@@ -7,6 +7,7 @@ samba-data:
     - /bin/true
   image: busybox
   volumes:
+    - /data/:/srv/data
     - /data.secure/:/srv/secure
     - /data.secure/nfs/public:/srv/shares/public/
     - /data.secure/samba/srv/shares/home:/srv/shares/home/

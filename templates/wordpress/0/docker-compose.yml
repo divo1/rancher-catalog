@@ -16,7 +16,7 @@ services:
     links:
       - mysql:mysql
     volumes:
-      - /data.secure/var/www/${DOMAIN}/:/var/www/html/
+      - /data/var/www/${DOMAIN}/:/var/www/html/
     environment:
       WORDPRESS_DB_PASSWORD: "SXykY4oC5fLnM89eY6XjGn5kQAsn48"
     depends_on:

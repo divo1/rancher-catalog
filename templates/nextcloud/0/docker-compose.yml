@@ -38,8 +38,7 @@ services:
     depends_on:
     - postgresql
     volumes:
-    - /data.secure/nextcloud/nextcloud:/var/lib/nextcloud
-    - /data.secure/samba/srv/shares/home/divo/:/var/lib/nextcloud/ocdata/divo/files/
+    - /data/nextcloud/nextcloud:/var/lib/nextcloud
 
   nginx:
     restart: always
