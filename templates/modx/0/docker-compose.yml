@@ -14,8 +14,8 @@ services:
     image: modx
     links:
       - db:mysql
-#    volumes:
-#      - /data.secure/var/www/${DOMAIN}/:/var/www/html/
+    volumes:
+      - /data.secure/var/www/${DOMAIN}/:/var/www/html/
   db:
     image: mysql
     environment:
