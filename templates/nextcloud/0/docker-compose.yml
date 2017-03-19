@@ -39,6 +39,7 @@ services:
     - postgresql
     volumes:
     - /data.secure/nextcloud/nextcloud:/var/lib/nextcloud
+    - /data.secure/samba/srv/shares/home/divo/:/var/lib/nextcloud/ocdata/divo/files/
 
   nginx:
     restart: always
