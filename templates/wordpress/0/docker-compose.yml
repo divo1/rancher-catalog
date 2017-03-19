@@ -19,6 +19,8 @@ services:
       - /data.secure/var/www/${DOMAIN}/:/var/www/html/
     environment:
       WORDPRESS_DB_PASSWORD: "SXykY4oC5fLnM89eY6XjGn5kQAsn48"
+    depends_on:
+    - mysql
 
   mysql:
     image: mariadb
