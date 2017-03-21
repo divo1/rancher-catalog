@@ -1,0 +1,28 @@
+---
+version: '2'
+
+services:
+  web:
+    labels:
+      io.rancher.sidekicks: db
+      io.rancher.container.pull_image: always
+      rap.host: "${DOMAIN}"
+      rap.port: 80
+      rap.proto: http
+      rap.le_host: "${DOMAIN}"
+      rap.le_email: "divo@divo.net.pl"
+    image: modx
+    links:
+      - db:mysql
+    volumes:
+      - /data/var/www/${DOMAIN}/:/usr/src/modx/
+    depends_on:
+    - mysql
+
+  db:
+    image: mariadb
+    volumes:
+      - /data/mysql/${DOMAIN}/:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    command: mysqld --sql-mode=NO_ENGINE_SUBSTITUTION

@@ -1,0 +1,12 @@
+.catalog:
+  name: "Modx CMS"
+  version: "v0.1"
+  description: "Blog tool, publishing platform and CMS"
+  uuid: divo-Modx-CMS-0
+  minimum_rancher_version: v0.51.0
+  questions:
+    - variable: "DOMAIN"
+      description: "Domain where blog is"
+      label: "Domain where blog is"
+      required: true
+      type: "string"

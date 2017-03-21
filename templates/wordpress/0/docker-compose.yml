@@ -16,13 +16,15 @@ services:
     links:
       - mysql:mysql
     volumes:
-      - /data.secure/var/www/${DOMAIN}/:/var/www/html/
+      - /data/var/www/${DOMAIN}/:/var/www/html/
     environment:
       WORDPRESS_DB_PASSWORD: "SXykY4oC5fLnM89eY6XjGn5kQAsn48"
+    depends_on:
+    - mysql
 
   mysql:
     image: mariadb
     volumes:
-      - /data.secure/mysql/${DOMAIN}/:/var/lib/mysql
+      - /data/mysql/${DOMAIN}/:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: "SXykY4oC5fLnM89eY6XjGn5kQAsn48"
