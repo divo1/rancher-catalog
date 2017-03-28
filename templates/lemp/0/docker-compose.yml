@@ -1,0 +1,16 @@
+---
+version: '2'
+
+services:
+
+  lempemp:
+    labels:
+      io.rancher.container.pull_image: always
+      rap.host: "${DOMAIN}"
+      rap.port: 80
+      rap.proto: http
+      rap.le_host: "${DOMAIN}"
+      rap.le_email: "divo@divo.net.pl"
+    image: stenote/docker-lemp
+    volumes:
+      - /data/var/www/${DOMAIN}/:/var/www/
