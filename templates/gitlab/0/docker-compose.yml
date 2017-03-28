@@ -1,0 +1,31 @@
+---
+gitlab-server:
+  ports:
+  - ${ssh_port}:22/tcp
+  labels:
+    io.rancher.sidekicks: gitlab-data
+    rap.host: "${gitlab_hostname}"
+    rap.port: 80
+    rap.proto: http
+    rap.le_host: "${DOMAIN}"
+    rap.le_email: "divo@divo.net.pl"
+  hostname: ${gitlab_hostname}
+  image: gitlab/gitlab-ce:latest
+  volumes_from:
+  - gitlab-data
+  environment:
+    GITLAB_OMNIBUS_CONFIG: |
+      external_url '${gitlab_omnipus_prefix}${gitlab_hostname}'
+
+gitlab-data:
+  labels:
+    io.rancher.container.start_once: 'true'
+  entrypoint:
+  - /bin/true
+  hostname: gitdata
+  image: gitlab/gitlab-ce:latest
+  volumes:
+  - /data/etc/gitlab:/etc/gitlab
+  - /data/var/log/gitlab:/var/log/gitlab
+  - /data/var/opt/gitlab:/var/opt/gitlab
+
