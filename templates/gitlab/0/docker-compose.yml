@@ -16,9 +16,11 @@ gitlab-server:
   environment:
     GITLAB_OMNIBUS_CONFIG: |
       external_url '${gitlab_omnipus_prefix}${gitlab_hostname}'
-    SIDEKIQ_CONCURRENCY: ${CONCURRENCY}
-    SIDEKIQ_SHUTDOWN_TIMEOUT: ${SHUTDOWN_TIMEOUT}
-    UNICORN_WORKERS: ${WORKERS}
+      unicorn['worker_processes'] = ${WORKERS}
+      unicorn['worker_timeout'] = ${TIMEOUT}
+      gitlab_rails['gitlab_email_enabled'] = false
+      gitlab_rails['env'] = {"SIDEKIQ_MEMORY_KILLER_MAX_RSS" => "716800"}
+      sidekiq['concurrency'] = ${CONCURRENCY}
 
 gitlab-data:
   labels:

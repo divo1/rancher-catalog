@@ -47,8 +47,8 @@
       required: true
       default: 1
       type: "int"
-    - variable: "SHUTDOWN_TIMEOUT"
-      description: "Sidekiq timeout"
+    - variable: "TIMEOUT"
+      description: "Worker timeout"
       label: "timeout"
       required: true
       default: 10
