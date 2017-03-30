@@ -16,6 +16,9 @@ gitlab-server:
   environment:
     GITLAB_OMNIBUS_CONFIG: |
       external_url '${gitlab_omnipus_prefix}${gitlab_hostname}'
+    SIDEKIQ_CONCURRENCY: ${CONCURRENCY}
+    SIDEKIQ_SHUTDOWN_TIMEOUT: ${SHUTDOWN_TIMEOUT}
+    UNICORN_WORKERS: ${WORKERS}
 
 gitlab-data:
   labels:

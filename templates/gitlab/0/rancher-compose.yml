@@ -41,6 +41,24 @@
       required: true
       default: 22
       type: "string"
+    - variable: "CONCURRENCY"
+      description: "Concurency on sidekiq"
+      label: "number"
+      required: true
+      default: 1
+      type: "int"
+    - variable: "SHUTDOWN_TIMEOUT"
+      description: "Sidekiq timeout"
+      label: "timeout"
+      required: true
+      default: 10
+      type: "int"
+    - variable: "WORKERS"
+      description: "Unicorn workers"
+      label: "Workers"
+      required: true
+      default: 1
+      type: "int"
 
 gitlab-server:
   scale: 1
