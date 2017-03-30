@@ -13,8 +13,6 @@ gitlab-server:
   image: gitlab/gitlab-ce:latest
   volumes_from:
   - gitlab-data
-  command: |
-    bash -c 'mkdir -p /var/opt/gitlab/gitlab-rails/working/config/ && echo -e "---\n:concurrency: ${CONCURRENCY}" > /var/opt/gitlab/gitlab-rails/working/config/sidekiq.yml && /usr/local/bin/wrapper'
   environment:
     GITLAB_OMNIBUS_CONFIG: |
       external_url '${gitlab_omnipus_prefix}${gitlab_hostname}'
