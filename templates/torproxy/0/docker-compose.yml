@@ -2,12 +2,9 @@
 version: '2'
 
 services:
-  labels:
-    io.rancher.container.pull_image: always
   tor:
+    labels:
+      io.rancher.container.pull_image: always
     image: mattes/rotating-proxy
-#    ports:
-#      - "5566:5566"
-#      - "1936:1936"
     environment:
       - tors=20
