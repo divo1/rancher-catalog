@@ -1,0 +1,7 @@
+name: Tor Proxy
+description: HTTP proxy through the tor network
+version: 0.1.0
+category: Proxies
+maintainer: Andrew Red
+license: Apache2
+projectURL: https://github.com/maZahaca/rancher-tor-proxy.git
