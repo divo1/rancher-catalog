@@ -1,6 +1,19 @@
 .catalog:
   name: "Tor Proxy"
   version: "0.1-rancher2"
-  description: "HTTP proxy through the tor network"
-  uuid: tor-proxy-1
+  description: |
+    HTTP proxy through the tor network
   minimum_rancher_version: v0.46.0
+  maintainer: "Alexis Ducastel <alexis@ducastel.net>"
+  uuid: tor-proxy-1
+
+tor:
+  scale: 1
+  retain_ip: true
+  health_check:
+    port: 1936
+    interval: 30000
+    unhealthy_threshold: 3
+    strategy: recreate
+    response_timeout: 2000
+    healthy_threshold: 2

@@ -2,6 +2,7 @@
 version: '2'
 
 services:
+
   tor:
     labels:
       io.rancher.container.pull_image: always
