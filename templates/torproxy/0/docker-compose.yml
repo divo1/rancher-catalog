@@ -15,3 +15,4 @@ services:
       - "8118:8118"
 #    expose:
 #      - "8118"
+    restart: "always"
