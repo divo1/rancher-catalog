@@ -1,6 +1,0 @@
-.catalog:
-  name: "Tor Proxy"
-  version: "0.1-rancher2"
-  description: "HTTP proxy through the tor network"
-  uuid: tor-proxy-1
-  minimum_rancher_version: v0.46.0
