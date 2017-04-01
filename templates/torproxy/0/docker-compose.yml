@@ -6,6 +6,6 @@ services:
   tor:
     labels:
       io.rancher.container.pull_image: always
-    image: mattes/rotating-proxy
+    image: sledigabel/tor-proxy
     environment:
       - tors=20
