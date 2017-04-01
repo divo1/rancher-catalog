@@ -7,6 +7,10 @@
   maintainer: "Alexis Ducastel <alexis@ducastel.net>"
   uuid: tor-proxy-1
 
-tor:
+torproxy:
+  scale: 1
+  retain_ip: true
+
+privoxy:
   scale: 1
   retain_ip: true

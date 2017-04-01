@@ -1,11 +1,17 @@
 ---
 version: '2'
-
 services:
+  torproxy:
+    image: jess/tor-proxy
+#    expose:
+#      - "9050"
+    restart: "always"
 
-  tor:
-    labels:
-      io.rancher.container.pull_image: always
-    image: sledigabel/tor-proxy
-    environment:
-      - tors=20
+  privoxy:
+    image: jess/privoxy
+    links:
+      - torproxy
+    ports:
+      - "8118:8118"
+#    expose:
+#      - "8118"
