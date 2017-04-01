@@ -7,7 +7,7 @@ gitlab-server:
     rap.host: "${gitlab_hostname}"
     rap.port: 80
     rap.proto: http
-    rap.le_host: "${DOMAIN}"
+    rap.le_host: "${gitlab_hostname}"
     rap.le_email: "divo@divo.net.pl"
   hostname: ${gitlab_hostname}
   image: gitlab/gitlab-ce:latest
