@@ -1,15 +1,13 @@
-http-tor-proxy:
-  image: 'mazahaca/docker-tor-privoxy:latest'
-  environment:
-    - TOR_PROXY=tor-1
-  links:
-    - tor-1
-  ports:
-    - '8118:8118'
-  restart: always
-tor-1:
-  image: 'mazahaca/tor-proxy:latest'
-  ports:
-    - '9050:9050'
-    - '9053:9053'
-  restart: always
+---
+version: '2'
+
+services:
+  labels:
+    io.rancher.container.pull_image: always
+  tor:
+    image: mattes/rotating-proxy
+#    ports:
+#      - "5566:5566"
+#      - "1936:1936"
+    environment:
+      - tors=20
