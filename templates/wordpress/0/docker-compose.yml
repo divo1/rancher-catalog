@@ -31,7 +31,6 @@ services:
   wordpress-data:
     labels:
       io.rancher.container.start_once: 'true'
-    net: none
     entrypoint:
       - /bin/true
     image: busybox

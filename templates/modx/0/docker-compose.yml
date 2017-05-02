@@ -30,7 +30,6 @@ services:
   modx-web-data:
     labels:
       io.rancher.container.start_once: 'true'
-    net: none
     entrypoint:
       - /bin/true
     image: busybox
@@ -40,7 +39,6 @@ services:
   modx-db-data:
     labels:
       io.rancher.container.start_once: 'true'
-    net: none
     entrypoint:
       - /bin/true
     image: busybox
