@@ -13,7 +13,7 @@ services:
       rap.le_email: "divo@divo.net.pl"
     image: modx
     links:
-      - db:mysql
+      - modx-db:mysql
     volumes_from:
       - modx-web-data
     depends_on:
