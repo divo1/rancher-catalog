@@ -1,6 +1,5 @@
 ---
 version: '2'
-
 services:
 
   wordpress:
@@ -10,21 +9,31 @@ services:
       rap.host: "${DOMAIN}"
       rap.port: 80
       rap.proto: http
-#      rap.le_host: "${DOMAIN}"
-#      rap.le_email: "divo@divo.net.pl"
+      rap.le_host: "${DOMAIN}"
+      rap.le_email: "divo@divo.net.pl"
     image: wordpress
     links:
-      - mysql:mysql
-    volumes:
-      - /data/var/www/${DOMAIN}/:/var/www/html/
+      - db:mysql
+    volumes_from:
+      - wordpress-data
     environment:
       WORDPRESS_DB_PASSWORD: "SXykY4oC5fLnM89eY6XjGn5kQAsn48"
     depends_on:
-    - mysql
+    - db
 
-  mysql:
+  db:
     image: mariadb
     volumes:
-      - /data/mysql/${DOMAIN}/:/var/lib/mysql
+      - /data/wordpress/mysql/${DOMAIN}/:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: "SXykY4oC5fLnM89eY6XjGn5kQAsn48"
+
+  wordpress-data:
+    labels:
+      io.rancher.container.start_once: 'true'
+    net: none
+    entrypoint:
+      - /bin/true
+    image: busybox
+    volumes:
+      - /data/wordpress/www/${DOMAIN}/:/var/www/html/

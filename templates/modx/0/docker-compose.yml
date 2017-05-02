@@ -2,7 +2,7 @@
 version: '2'
 
 services:
-  web:
+  modx-web:
     labels:
       io.rancher.sidekicks: db
       io.rancher.container.pull_image: always
@@ -14,15 +14,35 @@ services:
     image: modx
     links:
       - db:mysql
-    volumes:
-      - /data/var/www/${DOMAIN}/:/usr/src/modx/
+    volumes_from:
+      - modx-web-data
     depends_on:
-    - mysql
+      - modx-db
 
-  db:
+  modx-db:
     image: mariadb
-    volumes:
-      - /data/mysql/${DOMAIN}/:/var/lib/mysql
+    volumes_from:
+      - modx-db-data
     environment:
       MYSQL_ROOT_PASSWORD: example
     command: mysqld --sql-mode=NO_ENGINE_SUBSTITUTION
+
+  modx-web-data:
+    labels:
+      io.rancher.container.start_once: 'true'
+    net: none
+    entrypoint:
+      - /bin/true
+    image: busybox
+    volumes:
+      - /data/modx/www/${DOMAIN}/:/usr/src/modx/
+
+  modx-db-data:
+    labels:
+      io.rancher.container.start_once: 'true'
+    net: none
+    entrypoint:
+      - /bin/true
+    image: busybox
+    volumes:
+      - /data/modx/mysql/${DOMAIN}/:/var/lib/mysql

@@ -25,12 +25,11 @@ gitlab-server:
 gitlab-data:
   labels:
     io.rancher.container.start_once: 'true'
+  net: none
   entrypoint:
-  - /bin/true
-  hostname: gitdata
-  image: gitlab/gitlab-ce:latest
+    - /bin/true
+  image: busybox
   volumes:
-  - /data/etc/gitlab:/etc/gitlab
-  - /data/var/log/gitlab:/var/log/gitlab
-  - /data/var/opt/gitlab:/var/opt/gitlab
-
+  - /data/gitlab/etc/:/etc/gitlab
+  - /data/gitlab/log/:/var/log/gitlab
+  - /data/gitlab/opt/:/var/opt/gitlab

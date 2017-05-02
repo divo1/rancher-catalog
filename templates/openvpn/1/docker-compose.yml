@@ -1,36 +1,38 @@
 ---
-openvpn-httpdigest-data:
-  labels:
-    io.rancher.container.start_once: 'true'
-  net: none
-  entrypoint:
-    - /bin/true
-  image: busybox
-  volumes:
-    - /data.secure/etc/openvpn/:/etc/openvpn/
+version: '2'
+services:
+  openvpn-data:
+    labels:
+      io.rancher.container.start_once: 'true'
+    net: none
+    entrypoint:
+      - /bin/true
+    image: busybox
+    volumes:
+      - /data/openvpn/etc/:/etc/openvpn/
 
-openvpn-httpdigest-server:
-  ports:
-    - 1194:1194
-  environment:
-    AUTH_METHOD: httpbasic
-    CERT_COUNTRY: ${CERT_COUNTRY}
-    CERT_PROVINCE: ${CERT_PROVINCE}
-    CERT_CITY: ${CERT_CITY}
-    CERT_ORG: ${CERT_ORG}
-    CERT_EMAIL: ${CERT_EMAIL}
-    CERT_OU: ${CERT_OU}
-    REMOTE_IP: ${REMOTE_IP}
-    REMOTE_PORT: ${REMOTE_PORT}
-    VPNPOOL_NETWORK: ${VPNPOOL_NETWORK}
-    VPNPOOL_CIDR: ${VPNPOOL_CIDR}
-    OPENVPN_EXTRACONF: ${OPENVPN_EXTRACONF}
-    ROUTE_NETWORK: ${ROUTE_NETWORK}
-    ROUTE_CIDR: ${ROUTE_CIDR}
-  labels:
-    io.rancher.sidekicks: openvpn-httpdigest-data
-    io.rancher.container.pull_image: always
-  image: divo/openvpn
-  privileged: true
-  volumes_from:
-    - openvpn-httpdigest-data
+  openvpn-server:
+    ports:
+      - 1194:1194
+    environment:
+      AUTH_METHOD: httpbasic
+      CERT_COUNTRY: ${CERT_COUNTRY}
+      CERT_PROVINCE: ${CERT_PROVINCE}
+      CERT_CITY: ${CERT_CITY}
+      CERT_ORG: ${CERT_ORG}
+      CERT_EMAIL: ${CERT_EMAIL}
+      CERT_OU: ${CERT_OU}
+      REMOTE_IP: ${REMOTE_IP}
+      REMOTE_PORT: ${REMOTE_PORT}
+      VPNPOOL_NETWORK: ${VPNPOOL_NETWORK}
+      VPNPOOL_CIDR: ${VPNPOOL_CIDR}
+      OPENVPN_EXTRACONF: ${OPENVPN_EXTRACONF}
+      ROUTE_NETWORK: ${ROUTE_NETWORK}
+      ROUTE_CIDR: ${ROUTE_CIDR}
+    labels:
+      io.rancher.sidekicks: openvpn-data
+      io.rancher.container.pull_image: always
+    image: divo/openvpn
+    privileged: true
+    volumes_from:
+      - openvpn-data
