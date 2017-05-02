@@ -4,7 +4,7 @@ version: '2'
 services:
   modx-web:
     labels:
-      io.rancher.sidekicks: db
+      io.rancher.sidekicks: modx-db
       io.rancher.container.pull_image: always
       rap.host: "${DOMAIN}"
       rap.port: 80
