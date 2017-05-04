@@ -4,7 +4,7 @@ services:
 
   wordpress:
     labels:
-      io.rancher.sidekicks: mysql
+      io.rancher.sidekicks: db
       io.rancher.container.pull_image: always
       rap.host: "${DOMAIN}"
       rap.port: 80
