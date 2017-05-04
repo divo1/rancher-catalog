@@ -34,7 +34,7 @@ services:
       - /bin/true
     image: busybox
     volumes:
-      - /data/modx/www/${DOMAIN}/:/usr/src/modx/
+      - /data/www/${DOMAIN}/:/usr/src/modx/
 
   modx-db-data:
     labels:
@@ -43,4 +43,4 @@ services:
       - /bin/true
     image: busybox
     volumes:
-      - /data/modx/mysql/${DOMAIN}/:/var/lib/mysql
+      - /data/mysql/${DOMAIN}/:/var/lib/mysql

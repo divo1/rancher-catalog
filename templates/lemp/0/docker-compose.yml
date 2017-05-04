@@ -22,4 +22,4 @@ services:
       - /bin/true
     image: busybox
     volumes:
-      - /data/lemp/www/${DOMAIN}/:/var/www/
+      - /data/www/${DOMAIN}/:/var/www/

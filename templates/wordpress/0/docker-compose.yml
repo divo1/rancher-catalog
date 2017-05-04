@@ -24,7 +24,7 @@ services:
   db:
     image: mariadb
     volumes:
-      - /data/wordpress/mysql/${DOMAIN}/:/var/lib/mysql
+      - /data/mysql/${DOMAIN}/:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: "SXykY4oC5fLnM89eY6XjGn5kQAsn48"
 
@@ -35,4 +35,4 @@ services:
       - /bin/true
     image: busybox
     volumes:
-      - /data/wordpress/www/${DOMAIN}/:/var/www/html/
+      - /data/www/${DOMAIN}/:/var/www/html/
