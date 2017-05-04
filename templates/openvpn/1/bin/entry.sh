@@ -21,7 +21,7 @@ OPENVPNDIR="$OPENVPN"
 [ "$REMOTE_PORT" = "" ]      && export REMOTE_PORT="1194"
 [ "$PUSHDNS" = "" ]          && export PUSHDNS="169.254.169.250"
 [ "$PUSHSEARCH" = "" ]       && export PUSHSEARCH="rancher.internal"
-[ "$DHPARAM_KEY" = "" ]      && export DHPARAM_KEY="2048"
+[ "$KEY_SIZE" = "" ]         && export KEY_SIZE="2048"
 
 [ "$ROUTE_NETWORK" = "" ]    && export ROUTE_NETWORK="10.43.0.0"
 [ "$ROUTE_NETMASK" = "" ]    && export ROUTE_NETMASK="255.255.0.0"
