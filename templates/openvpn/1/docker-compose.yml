@@ -28,7 +28,7 @@ services:
       OPENVPN_EXTRACONF: ${OPENVPN_EXTRACONF}
       ROUTE_NETWORK: ${ROUTE_NETWORK}
       ROUTE_CIDR: ${ROUTE_CIDR}
-      KEY_SIZE: ${DHPARAM_KEY}
+      EASYRSA_KEY_SIZE: ${DHPARAM_KEY}
     labels:
       io.rancher.sidekicks: openvpn-data
       io.rancher.container.pull_image: always
