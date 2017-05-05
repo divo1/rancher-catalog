@@ -11,6 +11,9 @@ services:
       - /data/openvpn/etc/:/etc/openvpn/
 
   openvpn-server:
+    labels:
+      io.rancher.sidekicks: openvpn-data
+      io.rancher.container.pull_image: always
     ports:
       - 1194:1194
     environment:
@@ -29,10 +32,9 @@ services:
       ROUTE_NETWORK: ${ROUTE_NETWORK}
       ROUTE_CIDR: ${ROUTE_CIDR}
       EASYRSA_KEY_SIZE: ${DHPARAM_KEY}
-    labels:
-      io.rancher.sidekicks: openvpn-data
-      io.rancher.container.pull_image: always
     image: divo/openvpn
     privileged: true
     volumes_from:
+      - openvpn-data
+    depends_on:
       - openvpn-data
