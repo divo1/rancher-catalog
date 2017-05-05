@@ -10,5 +10,3 @@
       label: "Domain where blog is"
       required: true
       type: "string"
-
-wordpress:
