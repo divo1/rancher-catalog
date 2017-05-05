@@ -1,10 +1,9 @@
 ---
 version: '2'
-
 services:
   modx-web:
     labels:
-      io.rancher.sidekicks: modx-web-data, modx-db
+      io.rancher.sidekicks: modx-web-data
       io.rancher.container.pull_image: always
       rap.host: "${DOMAIN}"
       rap.port: 80
@@ -18,7 +17,6 @@ services:
       - modx-web-data
     depends_on:
       - modx-web-data
-      - modx-db
 
   modx-db:
     labels:
@@ -39,7 +37,7 @@ services:
       - /bin/true
     image: busybox
     volumes:
-      - /data/modx/www/${DOMAIN}/:/usr/src/modx/
+      - /data/www/${DOMAIN}/:/usr/src/modx/
 
   modx-db-data:
     labels:
@@ -48,4 +46,4 @@ services:
       - /bin/true
     image: busybox
     volumes:
-      - /data/modx/mysql/${DOMAIN}/:/var/lib/mysql
+      - /data/mysql/${DOMAIN}/:/var/lib/mysql
