@@ -3,7 +3,7 @@ version: '2'
 services:
   wordpress:
     labels:
-      io.rancher.sidekicks: wordpress-data, db
+      io.rancher.sidekicks: wordpress-data
       io.rancher.container.pull_image: always
       rap.host: "${DOMAIN}"
       rap.port: 80
@@ -19,9 +19,11 @@ services:
       WORDPRESS_DB_PASSWORD: "SXykY4oC5fLnM89eY6XjGn5kQAsn48"
     depends_on:
       - wordpress-data
-      - db
 
   db:
+    labels:
+      io.rancher.sidekicks: db-data
+      io.rancher.container.pull_image: always
     image: mariadb
     volumes_from:
       - db-data
