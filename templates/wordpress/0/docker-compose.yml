@@ -1,10 +1,9 @@
 ---
 version: '2'
 services:
-
   wordpress:
     labels:
-      io.rancher.sidekicks: db
+      io.rancher.sidekicks: wordpress-data, db
       io.rancher.container.pull_image: always
       rap.host: "${DOMAIN}"
       rap.port: 80
@@ -19,14 +18,24 @@ services:
     environment:
       WORDPRESS_DB_PASSWORD: "SXykY4oC5fLnM89eY6XjGn5kQAsn48"
     depends_on:
-    - db
+      - wordpress-data
+      - db
 
   db:
     image: mariadb
-    volumes:
-      - /data/mysql/${DOMAIN}/:/var/lib/mysql
+    volumes_from:
+      - db-data
     environment:
       MYSQL_ROOT_PASSWORD: "SXykY4oC5fLnM89eY6XjGn5kQAsn48"
+
+  db-data:
+    labels:
+      io.rancher.container.start_once: 'true'
+    entrypoint:
+      - /bin/true
+    image: busybox
+    volumes:
+      - /data/mysql/${DOMAIN}/:/var/lib/mysql
 
   wordpress-data:
     labels:
