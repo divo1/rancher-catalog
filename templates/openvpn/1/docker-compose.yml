@@ -3,7 +3,6 @@ version: '2'
 services:
   openvpn-server:
     labels:
-      io.rancher.sidekicks: openvpn-data
       io.rancher.container.pull_image: always
     ports:
       - 1194:1194
@@ -25,16 +24,5 @@ services:
       EASYRSA_KEY_SIZE: ${DHPARAM_KEY}
     image: divo/openvpn
     privileged: true
-    volumes_from:
-      - openvpn-data
-    depends_on:
-      - openvpn-data
-
-  openvpn-data:
-    labels:
-      io.rancher.container.start_once: 'true'
-    entrypoint:
-      - /bin/true
-    image: busybox
     volumes:
       - /data/openvpn/etc/:/etc/openvpn/
