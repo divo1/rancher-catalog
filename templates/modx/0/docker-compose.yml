@@ -18,14 +18,20 @@ services:
       - modx-web-data
     depends_on:
       - modx-db
+      - modx-web-data
 
   modx-db:
+    labels:
+      io.rancher.sidekicks: modx-db-data
+      io.rancher.container.pull_image: always
     image: mariadb
     volumes_from:
       - modx-db-data
     environment:
       MYSQL_ROOT_PASSWORD: example
     command: mysqld --sql-mode=NO_ENGINE_SUBSTITUTION
+    depends_on:
+      - modx-db-data
 
   modx-web-data:
     labels:
