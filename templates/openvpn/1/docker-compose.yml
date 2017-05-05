@@ -1,15 +1,6 @@
 ---
 version: '2'
 services:
-  openvpn-data:
-    labels:
-      io.rancher.container.start_once: 'true'
-    entrypoint:
-      - /bin/true
-    image: busybox
-    volumes:
-      - /data/openvpn/etc/:/etc/openvpn/
-
   openvpn-server:
     ports:
       - 1194:1194
@@ -28,6 +19,7 @@ services:
       OPENVPN_EXTRACONF: ${OPENVPN_EXTRACONF}
       ROUTE_NETWORK: ${ROUTE_NETWORK}
       ROUTE_CIDR: ${ROUTE_CIDR}
+      EASYRSA_KEY_SIZE: ${DHPARAM_KEY}
     labels:
       io.rancher.sidekicks: openvpn-data
       io.rancher.container.pull_image: always
@@ -35,3 +27,12 @@ services:
     privileged: true
     volumes_from:
       - openvpn-data
+
+  openvpn-data:
+    labels:
+      io.rancher.container.start_once: 'true'
+    entrypoint:
+      - /bin/true
+    image: busybox
+    volumes:
+      - /data/openvpn/etc/:/etc/openvpn/
