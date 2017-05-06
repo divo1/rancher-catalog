@@ -1,7 +1,7 @@
 ---
 gitlab-server:
   ports:
-  - ${ssh_port}:22/tcp
+    - ${ssh_port}:22/tcp
   labels:
     io.rancher.sidekicks: gitlab-data
     rap.host: "${gitlab_hostname}"
@@ -12,7 +12,7 @@ gitlab-server:
   hostname: ${gitlab_hostname}
   image: gitlab/gitlab-ce:latest
   volumes_from:
-  - gitlab-data
+    - gitlab-data
   environment:
     GITLAB_OMNIBUS_CONFIG: |
       external_url '${gitlab_omnipus_prefix}${gitlab_hostname}'
