@@ -25,7 +25,7 @@ services:
     - DB_PASS=password
     - DB_NAME=nextcloud
 
-    - NEXTCLOUD_URL=http://nc.divo.net.pl
+    - NEXTCLOUD_URL=http://{{ nextcloud_hostname }}
 
     - NEXTCLOUD_ADMIN_USER=
     - NEXTCLOUD_ADMIN_PASSWORD=
@@ -44,10 +44,10 @@ services:
     image: sameersbn/nextcloud:11.0.1
     command: app:nginx
     labels:
-      rap.host: "nc.divo.net.pl"
+      rap.host: "{{ nextcloud_hostname }}"
       rap.port: 80
       rap.proto: http
-      rap.le_host: "nc.divo.net.pl"
+      rap.le_host: "{{ nextcloud_hostname }}"
       rap.le_email: "divo@divo.net.pl"
     environment:
     - NEXTCLOUD_PHP_FPM_HOST=nextcloud
