@@ -1,0 +1,11 @@
+---
+version: '2'
+services:
+  fbctf:
+    labels:
+      io.rancher.container.pull_image: always
+      rap.host: "fbctf.dc4.divo.net.pl"
+      rap.port: 80
+      rap.proto: http
+    image: fbctf:latest
+    build: ./
