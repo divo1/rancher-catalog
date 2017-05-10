@@ -7,5 +7,5 @@ services:
       rap.host: "fbctf.dc4.divo.net.pl"
       rap.port: 80
       rap.proto: http
-    image: fbctf:latest
+    image: docker.io/divo/fbctf:latest
     build: ./

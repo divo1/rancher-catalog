@@ -1,7 +1,28 @@
-FROM alpine:3.4
-LABEL maintainer="Mateusz Górny <divo@divo.net.pl>"
+FROM ubuntu:trusty
+LABEL maintainer="Boik Su <boik@tdohacker.org>"
 
-RUN apt-get update
-RUN apt-get install git
-RUN git clone https://github.com/facebook/fbctf /root/fbctf
-RUN cd /root/fbctf && /root/fbctf/extra/provision.sh -m prod -c certbot -D fbctf.dc4.divo.net.pl -e divo@divo.net.pl -s $PWD
+ENV HOME /root/fbctf
+
+ARG DOMAIN
+ARG EMAIL
+ARG MODE=dev
+ARG TYPE=self
+ARG KEY
+ARG CRT
+
+#WORKDIR $HOME
+#COPY . $HOME
+RUN apt-get update \
+  && apt-get install -y \
+  rsync \
+  git \
+  curl \
+  ca-certificates \
+  && git clone https://github.com/facebook/fbctf $HOME \
+  && cd $HOME \
+  && chown www-data:www-data $HOME \
+  && ./extra/provision.sh -m $MODE -c $TYPE -k $KEY -C $CRT -D $DOMAIN -e $EMAIL -s `pwd` --docker \
+  && rm -f /var/run/hhvm/sock \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+CMD ["/root/fbctf/extra/service_startup.sh"]
