@@ -8,4 +8,3 @@ services:
       rap.port: 80
       rap.proto: http
     image: docker.io/divo/fbctf:latest
-    build: ./
