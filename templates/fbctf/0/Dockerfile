@@ -13,7 +13,7 @@ RUN apt-get update \
   && apt-get install -y \
   rsync \
   git \
-  curl \
+  curl
 RUN git clone https://github.com/facebook/fbctf
 RUN ca-certificates \
   && chown www-data:www-data $HOME \
