@@ -8,14 +8,14 @@ ARG TYPE=self
 
 WORKDIR $HOME
 #COPY . $HOME
-RUN git clone https://github.com/facebook/fbctf
 
 RUN apt-get update \
   && apt-get install -y \
   rsync \
   git \
   curl \
-  ca-certificates \
+RUN git clone https://github.com/facebook/fbctf
+RUN ca-certificates \
   && chown www-data:www-data $HOME \
   && ./extra/provision.sh -m $MODE -c $TYPE -s `pwd` --docker \
   && rm -f /var/run/hhvm/sock \
