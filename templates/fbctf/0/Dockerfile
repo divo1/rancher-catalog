@@ -17,7 +17,7 @@ RUN apt-get update \
   ca-certificates
 RUN git clone https://github.com/facebook/fbctf $HOME
 RUN chown www-data:www-data $HOME \
-  && ./extra/provision.sh -m $MODE -c $TYPE -s `pwd` --docker \
+  && ./extra/provision.sh -m $MODE -c $TYPE -s $HOME --docker \
   && rm -f /var/run/hhvm/sock \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
