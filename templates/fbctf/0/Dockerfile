@@ -1,7 +1,7 @@
 FROM ubuntu:trusty
 LABEL maintainer="Boik Su <boik@tdohacker.org>"
 
-ENV HOME /root
+ENV HOME /root/fbctf
 
 ARG MODE=dev
 ARG TYPE=self
