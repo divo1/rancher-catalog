@@ -23,6 +23,7 @@ services:
     labels:
       io.rancher.container.pull_image: always
     image: divo/openvpn
+    privileged: true
     volumes:
       - openvpn-data:/etc/openvpn/
 
