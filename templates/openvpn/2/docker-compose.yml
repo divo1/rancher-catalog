@@ -1,5 +1,5 @@
 ---
-version: '2'
+version: '3'
 services:
   openvpn-server:
     ports:
@@ -21,18 +21,10 @@ services:
       ROUTE_CIDR: ${ROUTE_CIDR}
       EASYRSA_KEY_SIZE: ${DHPARAM_KEY}
     labels:
-      io.rancher.sidekicks: openvpn-data
       io.rancher.container.pull_image: always
     image: divo/openvpn
-    privileged: true
-    volumes_from:
-      - openvpn-data
-
-  openvpn-data:
-    labels:
-      io.rancher.container.start_once: 'true'
-    entrypoint:
-      - /bin/true
-    image: busybox
     volumes:
-      - /data/openvpn/etc/:/etc/openvpn/
+      - openvpn-data:/etc/openvpn/
+
+volumes:
+  openvpn-data:
