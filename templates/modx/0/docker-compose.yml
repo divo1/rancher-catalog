@@ -3,8 +3,6 @@ version: '2'
 services:
   modx-web:
     labels:
-      io.rancher.sidekicks: modx-web-data
-      io.rancher.container.pull_image: always
       rap.host: "${DOMAIN}"
       rap.port: 80
       rap.proto: http
@@ -12,38 +10,17 @@ services:
       rap.le_email: "divo@divo.net.pl"
     image: modx
     links:
-      - modx-db:mysql
-    volumes_from:
-      - modx-web-data
+      - mysql
+    volumes:
+      - modx-data:/usr/src/modx/
     depends_on:
-      - modx-web-data
+      - mysql
 
-  modx-db:
-    labels:
-      io.rancher.sidekicks: modx-db-data
+  mysql:
     image: mariadb
-    volumes_from:
-      - modx-db-data
     environment:
-      MYSQL_ROOT_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: iqtLiJbPVf7DmjaWMME5RPaWphaUCUp
     command: mysqld --sql-mode=NO_ENGINE_SUBSTITUTION
-    depends_on:
-      - modx-db-data
 
-  modx-web-data:
-    labels:
-      io.rancher.container.start_once: 'true'
-    entrypoint:
-      - /bin/true
-    image: busybox
-    volumes:
-      - /data/www/${DOMAIN}/:/usr/src/modx/
-
-  modx-db-data:
-    labels:
-      io.rancher.container.start_once: 'true'
-    entrypoint:
-      - /bin/true
-    image: busybox
-    volumes:
-      - /data/mysql/${DOMAIN}/:/var/lib/mysql
+volumes:
+  modx-data
