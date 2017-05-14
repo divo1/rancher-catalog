@@ -11,9 +11,9 @@ gitlab-server:
   hostname: ${gitlab_hostname}
   image: gitlab/gitlab-ce:latest
   volumes:
-    - gitlab-data:/etc/gitlab
-    - gitlab-data:/var/log/gitlab
-    - gitlab-data:/var/opt/gitlab
+    - gitlab-data-etc:/etc/gitlab
+    - gitlab-data-log:/var/log/gitlab
+    - gitlab-data-opt:/var/opt/gitlab
   environment:
     GITLAB_OMNIBUS_CONFIG: |
       external_url 'https://${gitlab_hostname}'
@@ -24,4 +24,6 @@ gitlab-server:
       sidekiq['concurrency'] = ${CONCURRENCY}
 
 volumes:
-  gitlab-data:
+  gitlab-data-etc:
+  gitlab-data-log:
+  gitlab-data-opt:
