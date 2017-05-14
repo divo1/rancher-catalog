@@ -3,7 +3,6 @@ gitlab-server:
   ports:
     - ${ssh_port}:22/tcp
   labels:
-    io.rancher.sidekicks: gitlab-data
     rap.host: "${gitlab_hostname}"
     rap.port: 80
     rap.proto: http
@@ -11,25 +10,18 @@ gitlab-server:
     rap.le_email: "divo@divo.net.pl"
   hostname: ${gitlab_hostname}
   image: gitlab/gitlab-ce:latest
-  volumes_from:
-    - gitlab-data
+  volumes:
+    - gitlab-data:/etc/gitlab
+    - gitlab-data:/var/log/gitlab
+    - gitlab-data:/var/opt/gitlab
   environment:
     GITLAB_OMNIBUS_CONFIG: |
-      external_url '${gitlab_omnipus_prefix}${gitlab_hostname}'
+      external_url 'https://${gitlab_hostname}'
       unicorn['worker_processes'] = ${WORKERS}
       unicorn['worker_timeout'] = ${TIMEOUT}
       gitlab_rails['gitlab_email_enabled'] = false
       gitlab_rails['env'] = {"SIDEKIQ_MEMORY_KILLER_MAX_RSS" => "716800"}
       sidekiq['concurrency'] = ${CONCURRENCY}
 
-gitlab-data:
-  labels:
-    io.rancher.container.start_once: 'true'
-  net: none
-  entrypoint:
-    - /bin/true
-  image: busybox
-  volumes:
-  - /data/gitlab/etc/:/etc/gitlab
-  - /data/gitlab/log/:/var/log/gitlab
-  - /data/gitlab/opt/:/var/opt/gitlab
+volumes:
+  gitlab-data:
