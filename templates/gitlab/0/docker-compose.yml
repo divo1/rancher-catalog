@@ -24,6 +24,6 @@ gitlab-server:
       sidekiq['concurrency'] = ${CONCURRENCY}
 
 volumes:
-  gitlab-data-etc:
-  gitlab-data-log:
-  gitlab-data-opt:
+  - gitlab-data-etc:
+  - gitlab-data-log:
+  - gitlab-data-opt:
