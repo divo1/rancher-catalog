@@ -3,8 +3,6 @@ version: '2'
 services:
   wordpress:
     labels:
-      io.rancher.sidekicks: wordpress-data
-      io.rancher.container.pull_image: always
       rap.host: "${DOMAIN}"
       rap.port: 80
       rap.proto: http
@@ -12,38 +10,19 @@ services:
       rap.le_email: "divo@divo.net.pl"
     image: wordpress
     links:
-      - db:mysql
-    volumes_from:
-      - wordpress-data
+      - mysql
+    volumes:
+      - wordpress-data:/var/www/html/
     environment:
       WORDPRESS_DB_PASSWORD: "SXykY4oC5fLnM89eY6XjGn5kQAsn48"
-    depends_on:
-      - wordpress-data
 
-  db:
-    labels:
-      io.rancher.sidekicks: db-data
-      io.rancher.container.pull_image: always
+  mysql:
     image: mariadb
-    volumes_from:
-      - db-data
+    volumes:
+      - mysql-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: "SXykY4oC5fLnM89eY6XjGn5kQAsn48"
 
-  db-data:
-    labels:
-      io.rancher.container.start_once: 'true'
-    entrypoint:
-      - /bin/true
-    image: busybox
-    volumes:
-      - /data/mysql/${DOMAIN}/:/var/lib/mysql
-
-  wordpress-data:
-    labels:
-      io.rancher.container.start_once: 'true'
-    entrypoint:
-      - /bin/true
-    image: busybox
-    volumes:
-      - /data/www/${DOMAIN}/:/var/www/html/
+volumes:
+  wordpress-data
+  mysql-data

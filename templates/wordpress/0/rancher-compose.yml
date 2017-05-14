@@ -1,9 +1,9 @@
 .catalog:
   name: "Wordpress"
-  version: "v0.1-educaas1"
+  version: "v0.2"
   description: "Blog tool, publishing platform and CMS"
   uuid: divo-Wordpress-0
-  minimum_rancher_version: v0.51.0
+  minimum_rancher_version: v1.51.0
   questions:
     - variable: "DOMAIN"
       description: "Domain where blog is"
