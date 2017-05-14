@@ -1,4 +1,5 @@
 ---
+version: '2'
 gitlab-server:
   ports:
     - ${ssh_port}:22/tcp
@@ -24,6 +25,6 @@ gitlab-server:
       sidekiq['concurrency'] = ${CONCURRENCY}
 
 volumes:
-  gitlab-data-etc: {}
-  gitlab-data-log: {}
-  gitlab-data-opt: {}
+  gitlab-data-etc:
+  gitlab-data-log:
+  gitlab-data-opt:
