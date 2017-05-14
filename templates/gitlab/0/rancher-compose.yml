@@ -37,6 +37,18 @@
       required: true
       default: 1
       type: "int"
+    - variable: "smtp_user"
+      description: "Gitlab smtp user name"
+      label: "SMTP user:"
+      required: true
+      default: "git@git.divo.net.pl"
+      type: "string"
+    - variable: "smtp_password"
+      description: "Gitlab smtp password"
+      label: "SMTP password:"
+      required: true
+      default: ""
+      type: "password"
 
 gitlab-server:
   scale: 1
