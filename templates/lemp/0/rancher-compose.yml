@@ -1,9 +1,9 @@
 .catalog:
   name: "Docker Lemp"
-  version: "v0.1"
+  version: "v0.2"
   description: "Simple lemp stack"
   uuid: divo-lemp-0
-  minimum_rancher_version: v0.51.0
+  minimum_rancher_version: v1.51.0
   questions:
     - variable: "DOMAIN"
       description: "Domain where server is"

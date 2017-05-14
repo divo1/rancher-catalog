@@ -1,8 +1,0 @@
----
-name: glusterfs
-description: "Stworzenie glusterfs"
-version: 0
-category: fs
-maintainer: divo
-license: license
-projectURL: https://www.gluster.org/
