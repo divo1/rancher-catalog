@@ -1,8 +1,7 @@
 ---
 .catalog:
   name: mysql-divo
-  version: 0.4
-  scale: 1
+  version: 0.5
   description: |
     MYSQL
     Aby dodać hasło trzeba wejść do shell kontenera
@@ -11,5 +10,14 @@
     ALTER USER root IDENTIFIED BY 'my-secret-pw';
   maintainer: "Mateusz Gorny <divo@divo.net.pl>"
   minimum_rancher_version: 1.0.1
-  maximum_rancher_version: 2.0.0
   uuid: mysql-divo-1
+
+mysql-server:
+  scale: 1
+  health_check:
+    port: 3306
+    interval: 30000
+    unhealthy_threshold: 5
+    strategy: none
+    healthy_threshold: 2
+    response_timeout: 2000

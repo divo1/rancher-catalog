@@ -1,12 +1,11 @@
 ---
 .catalog:
   name: samba-divo
-  version: 0.1.1
-  scale: 3
+  version: 0.1.2
+  scale: 1
   description: "Samba rancher"
   maintainer: "Mateusz Gorny <divo@divo.net.pl>"
   minimum_rancher_version: 1.0.1
-  maximum_rancher_version: 2.0.0
   uuid: samba-divo-1
   questions:
     - variable: "SAMBA_ARGS"

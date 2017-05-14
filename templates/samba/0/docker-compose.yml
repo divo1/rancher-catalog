@@ -1,25 +1,15 @@
 ---
 version: '2'
 services:
-  samba-data:
-    labels:
-      io.rancher.container.start_once: 'true'
-    entrypoint:
-      - /bin/true
-    image: busybox
-    volumes:
-      - /data/:/srv/data
-      - /data/samba/home:/srv/shares/home/
-      - /data.secure/nfs/public:/srv/shares/public/
-
   docker-samba:
     image: divo/samba
     privileged: true
     restart: always
     environment:
       SAMBA_ARGS: ${SAMBA_ARGS}
-    labels:
-      io.rancher.sidekicks: samba-data
-      io.rancher.container.pull_image: always
-    volumes_from:
-      - samba-data
+    volumes:
+      - samba-data:/srv/shares/home/
+      - /data.secure/nfs/public:/srv/shares/public/
+
+volumes:
+  samba-data:

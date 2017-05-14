@@ -1,9 +1,0 @@
----
-docker-nfs:
- image: fuzzle/docker-nfs-server
- privileged: true
- restart: always
- volumes:
- - /data:/nfs
- command:
- - /data
