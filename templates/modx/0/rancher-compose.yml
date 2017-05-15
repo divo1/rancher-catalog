@@ -1,12 +1,21 @@
 .catalog:
   name: "Modx CMS"
-  version: "v0.2"
-  description: "Blog tool, publishing platform and CMS"
-  uuid: divo-Modx-CMS-0
-  minimum_rancher_version: v1.51.0
+  version: 0.2
+  description: |
+    Blog tool, publishing platform and CMS
+  minimum_rancher_version: v0.56.0
+  maintainer: "Mateusz Górny <divo@divo.net.pl>"
+  uuid: modxcms-0
   questions:
     - variable: "DOMAIN"
       description: "Domain where blog is"
       label: "Domain where blog is"
       required: true
       type: "string"
+
+    - variable: "MYSQL_ROOT_PASSWORD"
+      description: "Mysql root password"
+      label: "Mysql root password"
+      required: true
+      type: "password"
+      

@@ -19,8 +19,8 @@ services:
   mysql:
     image: mariadb
     environment:
-      MYSQL_ROOT_PASSWORD: iqtLiJbPVf7DmjaWMME5RPaWphaUCUp
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     command: mysqld --sql-mode=NO_ENGINE_SUBSTITUTION
 
 volumes:
-  modx-data
+  modx-data: 
