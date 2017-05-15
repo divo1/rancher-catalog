@@ -39,4 +39,4 @@ services:
 volumes:
   gitlab-data-etc:
   gitlab-data-log:
-  gitlab-data-opt:
+  gitlab-data-opt: 
