@@ -59,5 +59,3 @@ services:
 volumes:
   postgress-data: 
   nextcloud-data: 
-  samba-data:
-    external: true
