@@ -7,7 +7,7 @@
   questions:
     - variable: "nextcloud_hostname"
       description: "Hostname (without uri scheme http:// or https://)"
-      label: "Hostname1:"
+      label: "Hostname:"
       required: true
       default: "nc.divo.net.pl"
       type: "string"
