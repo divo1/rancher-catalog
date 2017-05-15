@@ -13,3 +13,4 @@ services:
 
 volumes:
   samba-data:
+    external: true
