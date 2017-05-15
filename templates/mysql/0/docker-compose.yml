@@ -4,7 +4,6 @@ services:
   mysql-server:
     image: mysql/mysql-server
     privileged: true
-    restart: always
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: yes
       MYSQL_ONETIME_PASSWORD: yes
@@ -12,4 +11,4 @@ services:
       - mysql-data:/var/lib/mysql
 
 volumes:
-  mysql-data
+  mysql-data: 

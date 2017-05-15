@@ -3,10 +3,7 @@ name: mysql
 version: 0.5
 description: |
     MYSQL
-    Aby dodać hasło trzeba wejść do shell kontenera
-    zalogować się do mysql (jednorazowe hasło w logu)
-    oraz wykonać:
-    ALTER USER root IDENTIFIED BY 'my-secret-pw';
+    One time password is in container. Check logs.
 category: sql
 maintainer: divo
 license: license

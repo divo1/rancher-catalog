@@ -1,15 +1,10 @@
----
 .catalog:
-  name: mysql-divo
+  name: "Divo mysql"
   version: 0.5
   description: |
-    MYSQL
-    Aby dodać hasło trzeba wejść do shell kontenera
-    zalogować się do mysql (jednorazowe hasło w logu)
-    oraz wykonać:
-    ALTER USER root IDENTIFIED BY 'my-secret-pw';
+    One time password is in container. Check logs.
+  minimum_rancher_version: v0.56.0
   maintainer: "Mateusz Gorny <divo@divo.net.pl>"
-  minimum_rancher_version: 1.0.1
   uuid: mysql-divo-1
 
 mysql-server:
