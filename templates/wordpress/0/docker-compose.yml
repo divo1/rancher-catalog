@@ -14,15 +14,15 @@ services:
     volumes:
       - wordpress-data:/var/www/html/
     environment:
-      WORDPRESS_DB_PASSWORD: "SXykY4oC5fLnM89eY6XjGn5kQAsn48"
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
 
   mysql:
     image: mariadb
     volumes:
       - mysql-data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: "SXykY4oC5fLnM89eY6XjGn5kQAsn48"
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
 
 volumes:
-  wordpress-data
-  mysql-data
+  wordpress-data: 
+  mysql-data: 

@@ -1,12 +1,24 @@
 .catalog:
   name: "Wordpress"
-  version: "v0.2"
-  description: "Blog tool, publishing platform and CMS"
-  uuid: divo-Wordpress-0
-  minimum_rancher_version: v1.51.0
+  version: 0.2
+  description: |
+    Blog tool, publishing platform and CMS
+  minimum_rancher_version: v0.56.0
+  maintainer: "Mateusz Górny <divo@divo.net.pl>"
+  uuid: wordpress-0
   questions:
     - variable: "DOMAIN"
       description: "Domain where blog is"
       label: "Domain where blog is"
       required: true
       type: "string"
+    - variable: "WORDPRESS_DB_PASSWORD"
+      description: "WORDPRESS_DB_PASSWORD"
+      label: "WORDPRESS_DB_PASSWORD"
+      required: true
+      type: "password"
+    - variable: "MYSQL_ROOT_PASSWORD"
+      description: "MYSQL_ROOT_PASSWORD"
+      label: "MYSQL_ROOT_PASSWORD"
+      required: true
+      type: "password"
