@@ -38,7 +38,6 @@ services:
     - postgresql
     volumes:
     - nextcloud-data:/var/lib/nextcloud
-    - samba-data:/var/lib/nextcloud/ocdata/
 
   nginx:
     restart: always
