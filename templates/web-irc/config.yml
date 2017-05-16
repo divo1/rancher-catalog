@@ -1,0 +1,5 @@
+name: Lounge web irc client
+description: |
+  The self-hosted web IRC client
+version: 0.1
+category: irc chat

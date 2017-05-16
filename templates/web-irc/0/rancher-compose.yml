@@ -1,0 +1,19 @@
+.catalog:
+  name: Lounge web irc client
+  version: 0.1
+  description: |
+    The self-hosted web IRC client
+  minimum_rancher_version: v0.56.0
+  maintainer: "Mateusz Górny <divo@divo.net.pl>"
+  uuid: lounge-0
+
+lounge-server:
+  scale: 1
+  retain_ip: true
+  health_check:
+    port: 9000
+    interval: 30000
+    unhealthy_threshold: 3
+    strategy: recreate
+    response_timeout: 2000
+    healthy_threshold: 2
