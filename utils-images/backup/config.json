@@ -1,0 +1,13 @@
+{
+	"configs": [
+		{
+			"name": "go-build",
+			"mount": [
+				{
+					"src": "/usr/src/myapp/",
+					"dest": "/tmp/go-build/app/"
+				}
+			]
+		}
+	]
+}
