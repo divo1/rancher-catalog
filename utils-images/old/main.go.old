@@ -1,0 +1,168 @@
+package main
+
+import (
+	"os"
+	"fmt"
+	"encoding/json"
+	"strings"
+	"errors"
+	"io/ioutil"
+	"time"
+	"bytes"
+	"crypto/md5"
+	"encoding/hex"
+
+	"github.com/docker/docker/client"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/container"
+	"golang.org/x/net/context"
+)
+
+const (
+	ImageName = "ubuntu"
+	ConfigFileName = "./config.json"
+	DockerApiVersion = "1.24"
+)
+
+var Context = context.Background()
+func getContext() context.Context {
+	return Context
+}
+
+type Mount struct {
+	Src  string
+	Dest string
+}
+
+type Config struct {
+	Name string
+	Mount []Mount
+}
+
+type Backup struct {
+	Configs []Config
+}
+
+type BackupConfig struct {
+	ContainerName string
+	Mount Mount
+	Client *client.Client
+}
+
+func getConfig(backup Backup, container types.Container) (Config, error) {
+	for _, config := range backup.Configs {
+		if strings.Contains(container.Names[0], config.Name) {
+			return config, nil
+		}
+	}
+
+	return Config{}, errors.New("Nie znaleziono config'a")
+}
+
+func GetMD5Hash(text string) string {
+	hasher := md5.New()
+	hasher.Write([]byte(text))
+	return hex.EncodeToString(hasher.Sum(nil))
+}
+
+func initConfig(config BackupConfig) (*container.Config) {
+	t := time.Now()
+	backupDir := "/backup/"
+	dir := strings.Replace(config.ContainerName, "\\", "-", -1) + "/" + GetMD5Hash(config.Mount.Src) + "/"
+	datePath := t.Format("2006/01/02/15/")
+	ext := ".tar.bz2"
+
+	backupFileName := t.Format("04.05.999999") + ext + ""
+	
+	backupFilePath := backupDir + dir + datePath + backupFileName
+	hostFilePath := config.Mount.Dest + dir + datePath + backupFileName
+
+	fmt.Println("Backup file path: " + backupFilePath)
+	fmt.Println("Host file path: " + hostFilePath)
+
+	var commandBuf bytes.Buffer
+	commandBuf.WriteString("mkdir -p " + backupDir + dir + datePath)
+	commandBuf.WriteString(" && cd " + config.Mount.Src)
+	commandBuf.WriteString(" && tar cvf " + backupFilePath + " -g " + backupDir + dir + datePath + "snapshot.incr " + "*")
+	commandBuf.WriteString(" && rm -f " + backupDir + dir + datePath + "latest" + ext)
+	commandBuf.WriteString(" && cd " + backupDir + dir)
+	commandBuf.WriteString(" && rm latest" + ext)
+	commandBuf.WriteString(" && ln -s " + hostFilePath + " latest" + ext)
+
+	fmt.Println(commandBuf.String())
+	return &container.Config{Image: ImageName, Cmd: []string{"sh", "-c", commandBuf.String()}}
+}
+
+func createContainer(Client *client.Client, config *container.Config, hostConfig *container.HostConfig) (container.ContainerCreateCreatedBody, error) {
+	return Client.ContainerCreate(getContext(), config, hostConfig, nil, "")
+}
+
+func getFile(fileName string) []byte {
+	file, e := ioutil.ReadFile(fileName)
+	if e != nil {
+		fmt.Printf("File error: %v\n", e)
+		os.Exit(1)
+	}
+
+	return file
+}
+
+func getBackup(file []byte) Backup {
+	var backup Backup
+	json.Unmarshal(file, &backup)
+
+	return backup
+}
+
+func getDockerClient() *client.Client {
+	client, err := client.NewClient("unix:///var/run/docker.sock", "1.24", nil, nil)
+	if err != nil {
+		panic(err)
+	}
+
+	return client
+}
+
+func backupContainer(config BackupConfig) {
+	cfg := initConfig(config)
+	hostConfig := &container.HostConfig{Binds: []string{config.Mount.Dest + ":/backup"}, AutoRemove: true, VolumesFrom: []string{config.ContainerName}}
+	ctnr, e := createContainer(config.Client, cfg, hostConfig)
+	if e != nil {
+		fmt.Printf("File error: %v\n", e)
+		return
+	}
+
+	if err := config.Client.ContainerStart(getContext(), ctnr.ID, types.ContainerStartOptions{}); err != nil {
+		panic(err)
+	}
+}
+
+func getDockerContainers(client *client.Client) []types.Container {
+	containers, err := client.ContainerList(getContext(), types.ContainerListOptions{})
+	if err != nil {
+		panic(err)
+	}
+
+	return containers
+}
+
+func main() {
+	os.Setenv("DOCKER_API_VERSION", DockerApiVersion)
+	file := getFile(ConfigFileName)
+	backup := getBackup(file)
+	client := getDockerClient()
+	containers := getDockerContainers(client)
+
+	for _, container := range containers {
+		//fmt.Printf("Image: %+v\n", container)
+
+		config, e := getConfig(backup, container)
+		if e != nil {
+			continue
+		}
+
+		for _, mount := range config.Mount {
+			backupContainer(BackupConfig{Client: client, ContainerName: config.Name, Mount: Mount{Src: mount.Src, Dest: mount.Dest}})
+		}
+	}
+}

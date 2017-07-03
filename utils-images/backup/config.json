@@ -2,10 +2,10 @@
 	"configs": [
 		{
 			"name": "go-build",
-			"mount": [
+			"mounts": [
 				{
 					"src": "/usr/src/myapp/",
-					"dest": "/tmp/go-build/app/"
+					"dest": "/tmp/backup/"
 				}
 			]
 		}
