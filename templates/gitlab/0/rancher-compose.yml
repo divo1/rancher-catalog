@@ -19,6 +19,12 @@
       required: true
       default: 22
       type: "string"
+    - variable: "VOLUME_DRIVER"
+      description: "What volume driver should use"
+      label: "Volume driver:"
+      required: true
+      default: "pxd"
+      type: "string"
     - variable: "CONCURRENCY"
       description: "Concurency on sidekiq"
       label: "number"
@@ -50,11 +56,22 @@
       default: ""
       type: "password"
 
-gitlab-server:
+gitlab-server-web:
   scale: 1
   retain_ip: true
   health_check:
     port: 80
+    interval: 30000
+    unhealthy_threshold: 3
+    strategy: recreate
+    response_timeout: 2000
+    healthy_threshold: 2
+
+gitlab-server-ssh:
+  scale: 1
+  retain_ip: true
+  health_check:
+    port: 22
     interval: 30000
     unhealthy_threshold: 3
     strategy: recreate
