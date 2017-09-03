@@ -5,7 +5,6 @@ services:
     image: gitlab/gitlab-ce:latest
     ports:
       - ${ssh_port}:22/tcp
-    hostname: ${hostname}
     volumes:
       - config-gitlab:/etc/gitlab
       - data-gitlab:/var/log/gitlab
