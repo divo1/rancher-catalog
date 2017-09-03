@@ -1,8 +1,0 @@
----
-name: samba
-description: "Utworzenie serwera samby"
-version: 0.1.2
-category: smb
-maintainer: divo
-license: license
-projectURL: https://www.samba.org/

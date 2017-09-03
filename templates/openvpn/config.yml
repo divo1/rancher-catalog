@@ -1,8 +1,0 @@
----
-name: openvpn
-description: "Stworzenie openvpn"
-version: 2.0.0
-category: vpn
-maintainer: divo
-license: license
-projectURL: https://openvpn.net/

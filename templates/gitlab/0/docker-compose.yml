@@ -5,12 +5,6 @@ services:
     image: gitlab/gitlab-ce:latest
     ports:
       - ${ssh_port}:22/tcp
-    labels:
-      rap.host: "${gitlab_hostname}"
-      rap.port: 80
-      rap.proto: http
-      rap.le_host: "${gitlab_hostname}"
-      rap.le_email: "divo@divo.net.pl"
     hostname: ${gitlab_hostname}
     volumes:
       - gitlab-data-etc:/etc/gitlab
@@ -38,5 +32,8 @@ services:
 
 volumes:
   gitlab-data-etc:
+    driver: ${VOLUME_DRIVER}
   gitlab-data-log:
+    driver: ${VOLUME_DRIVER}
   gitlab-data-opt:
+    driver: ${VOLUME_DRIVER}
