@@ -11,13 +11,13 @@
       description: "Gitlab hostname (without uri scheme http:// or https://)"
       label: "Hostname:"
       required: true
-      default: "git.example.com"
+      default: "git.divo.net.pl"
       type: "string"
     - variable: "ssh_port"
       description: "SSH port to expose on host. Will be used to bind TCP"
       label: "SSH port:"
       required: true
-      default: 22
+      default: 2222
       type: "string"
     - variable: "VOLUME_DRIVER"
       description: "What volume driver should use"
