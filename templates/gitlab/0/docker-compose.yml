@@ -31,5 +31,8 @@ services:
 
 volumes:
   config-gitlab:
+    driver: ${VOLUME_DRIVER}
   data-gitlab:
+    driver: ${VOLUME_DRIVER}
   log-gitlab:
+    driver: ${VOLUME_DRIVER}
