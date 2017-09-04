@@ -10,7 +10,7 @@ services:
       - data-gitlab:/var/log/gitlab
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://${gitlab_hostname}'
+        external_url 'https://${hostname}'
         unicorn['worker_processes'] = ${WORKERS}
         unicorn['worker_timeout'] = ${TIMEOUT}
         gitlab_rails['gitlab_email_enabled'] = false
