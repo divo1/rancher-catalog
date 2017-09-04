@@ -11,7 +11,3 @@ services:
   bitbucket:
     scale: 1
     start_on_create: true
-
-  bitbucket-data:
-    scale: 1
-    start_on_create: true
