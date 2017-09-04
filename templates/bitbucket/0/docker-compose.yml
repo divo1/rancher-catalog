@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+
+  bitbucket:
+    image: atlassian/bitbucket-server:5.1
+    volumes_from:
+      - bitbucket-data:/var/atlassian/application-data/bitbucket
+    labels:
+      io.rancher.container.hostname_override: container_name
+
+volumes:
+  bitbucket-data:
+    driver: pxd
+    external: true
