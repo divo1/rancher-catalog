@@ -7,7 +7,6 @@ catalog:
   description: Git Server
 
 services:
-
   bitbucket:
     scale: 1
     start_on_create: true
