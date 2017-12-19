@@ -3,6 +3,11 @@ version: '2'
 services:
   bitbucket:
     image: atlassian/bitbucket-server:latest
+    environment:
+      SERVER_SECURE: true
+      SERVER_SCHEME: https
+      SERVER_PROXY_PORT: 443
+#      SERVER_PROXY_NAME: ${URL}
     volumes:
       - bitbucket-volume:/var/atlassian/application-data/bitbucket
     labels:
