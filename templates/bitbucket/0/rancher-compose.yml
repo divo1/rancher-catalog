@@ -1,13 +1,33 @@
 version: '2'
 
 catalog:
-
   name: bitbucket
   version: 0.0.1
   description: Git Server
+  questions:
+    - variable: SERVER_PROXY_NAME
+      label: Bitbucket domain
+      default: bitbucket.rancher.internal
+      type: string
+    - variable: SERVER_SECURE
+      label: Is secure
+      default: false
+      type: boolean
+    - variable: SERVER_SCHEME
+      label: Server scheme
+      default: http
+      enum:
+        options:
+          - http
+          - https
+    - variable: SERVER_PROXY_PORT
+      label: Proxy port
+      default: 80
+      type: int
 
 services:
-
   bitbucket:
     scale: 1
     start_on_create: true
+    health_check:
+      port: 7990

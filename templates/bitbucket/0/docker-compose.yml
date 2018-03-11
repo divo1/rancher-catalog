@@ -1,15 +1,14 @@
 version: '2'
 
 services:
-
   bitbucket:
     image: atlassian/bitbucket-server:5.1
     volumes:
-      - bitbucket-data:/var/atlassian/application-data/bitbucket
+      - /rancher-volumes/bitbucket:/var/atlassian/application-data/bitbucket
+    env:
+      - SERVER_SECURE=${SERVER_SECURE}
+      - SERVER_SCHEME=${SERVER_SCHEME}
+      - SERVER_PROXY_PORT=${SERVER_PROXY_PORT}
+      - SERVER_PROXY_NAME=${SERVER_PROXY_NAME}
     labels:
       io.rancher.container.hostname_override: container_name
-
-volumes:
-  bitbucket-data:
-    driver: pxd
-    external: true
