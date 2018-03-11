@@ -2,7 +2,12 @@ version: '2'
 
 services:
   bitbucket:
-    image: atlassian/bitbucket-server:5.1
+    image: atlassian/bitbucket-server:latest
+    environment:
+      SERVER_SECURE: true
+      SERVER_SCHEME: https
+      SERVER_PROXY_PORT: 443
+#      SERVER_PROXY_NAME: ${URL}
     volumes:
       - /rancher-volumes/bitbucket:/var/atlassian/application-data/bitbucket
     env:
